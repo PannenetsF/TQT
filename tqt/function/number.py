@@ -5,7 +5,7 @@ Signed and unsigned fixed point data needed Straight-Through filter for back pro
 
 import torch
 from torch.autograd import Function
-from _utils import *
+from ._utils import *
 
 
 class Ceil(Function):

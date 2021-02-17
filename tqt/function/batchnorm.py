@@ -6,7 +6,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from number import qsigned
+from .number import qsigned
 
 
 class BatchNorm2d(nn.BatchNorm2d):

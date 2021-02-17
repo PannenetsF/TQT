@@ -6,7 +6,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from number import qsigned, qunsigned
+from .number import qsigned, qunsigned
 
 
 class ReLU(nn.ReLU):
