@@ -33,25 +33,25 @@ class BatchNorm2d(nn.BatchNorm2d):
             self.bias_log2_t = torch.Tensor(1)
             self.init_param(retrain)
 
-        def init_param(self, retrain):
-            pass
+    def init_param(self, retrain):
+        pass
 
-        def bn_forward(self, input):
-            if self.affine is True:
-                weight = qsigned(self.weight, self.weight_log2_t,
-                                 self.weight_bit_width)
-                bias = qsigned(self.bias, self.bias_log2_t,
-                               self.bias_bit_width)
-                output = F.batch_norm(input,
-                                      running_mean=self.running_mean,
-                                      running_var=self.running_var,
-                                      weight=weight,
-                                      bias=bias)
-            else:
-                output = F.batch_norm(input,
-                                      running_mean=self.running_mean,
-                                      running_var=self.running_var)
-            return output
+    def bn_forward(self, input):
+        if self.affine is True:
+            weight = qsigned(self.weight, self.weight_log2_t,
+                                self.weight_bit_width)
+            bias = qsigned(self.bias, self.bias_log2_t,
+                            self.bias_bit_width)
+            output = F.batch_norm(input,
+                                    running_mean=self.running_mean,
+                                    running_var=self.running_var,
+                                    weight=weight,
+                                    bias=bias)
+        else:
+            output = F.batch_norm(input,
+                                    running_mean=self.running_mean,
+                                    running_var=self.running_var)
+        return output
 
-        def forward(self, input):
-            return self.bn_forward(input)
+    def forward(self, input):
+        return self.bn_forward(input)
