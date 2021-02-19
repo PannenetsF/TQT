@@ -25,4 +25,12 @@ You'd better use `nn.ModuleList` and append every operation after it. If there'r
 
 ## Rebuild a network with TQT 
 
-Much often we need to re-train a network, and we can do a quick job with `lambda`. 
+Much often we need to re-train a network, and we can do a quick job with `lambda`. As you can see in the file `lenet.py`, with the change of the wrapper, a net could be simply converted into a quantilized one. 
+
+## Initialize a network's threshold 
+
+Just 3 steps! 
+
+1. Add hook for output storage.
+2. Adjust the threshold via `tqt.threshold` 
+3. Remove hook.
