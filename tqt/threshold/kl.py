@@ -46,4 +46,4 @@ def entropy_calibration(model, bin_number=2048, cali_number=128):
     m, m_idx = torch.min(divergence[cali_number:], 0)
     threshold = dist.min() + (m_idx + cali_number + 0.5) * bin_width
     log2_t = torch.log2(threshold)
-    model.acti_log2_t = log2_t
+    model.acti_log2_t = torch.nn.Parameter(log2_t)
