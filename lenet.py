@@ -24,6 +24,16 @@ class lenet(nn.Module):
         return x
 
 
-net = lenet(True)
+net = lenet(quant=False)
+qnet = lenet(quant=True)
 x = torch.rand(50, 1, 28, 28)
-print(net(x).shape)
+handler = tqt.threshold.hook_handler
+tqt.threshold.add_hook(qnet.proc, handler)
+qnet(x)
+for idx, p in enumerate(qnet.proc):
+    if hasattr(p, 'acti_log2_t'):
+        tqt.threshold.kl.entropy_calibration(p)
+    if hasattr(p, 'weight_log2_t'):
+        tqt.threshold.max.threshold_weight_max(p)
+    if hasattr(p, 'bias_log2_t'):
+        tqt.threshold.max.threshold_bias_max(p)
