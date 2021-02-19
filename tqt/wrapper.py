@@ -28,7 +28,15 @@ OFUNCTION = {
     'Linear':
     lambda in_features, out_features, bias=True, weight_bit_width=8,
     bias_bit_width=16, retrain=True: nn.Linear(
-        in_features, out_features, bias=bias)
+        in_features, out_features, bias=bias),
+    'MaxPool2d':
+    lambda kernel_size, stride=None, padding=0, dilation=1, return_indices=
+    False, ceil_mode=False: nn.MaxPool2d(kernel_size,
+                                         stride=stride,
+                                         padding=padding,
+                                         dilation=dilation,
+                                         return_indices=return_indices,
+                                         ceil_mode=ceil_mode)
 }
 
 QFUNCTION = {
@@ -73,5 +81,13 @@ QFUNCTION = {
                                                 weight_bit_width=
                                                 weight_bit_width,
                                                 bias_bit_width=bias_bit_width,
-                                                retrain=retrain)
+                                                retrain=retrain),
+    'MaxPool2d':
+    lambda kernel_size, stride=None, padding=0, dilation=1, return_indices=
+    False, ceil_mode=False: nn.MaxPool2d(kernel_size,
+                                         stride=stride,
+                                         padding=padding,
+                                         dilation=dilation,
+                                         return_indices=return_indices,
+                                         ceil_mode=ceil_mode)
 }
