@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import math
 
 
 def kl_divergence(ha, hb):
@@ -11,7 +12,7 @@ def kl_divergence(ha, hb):
 
 def quantize_bins_and_expand(dist, quant_bins):
     dist_len = dist.shape[0]
-    width = torch.floor(1. * dist_len / quant_bins)
+    width = math.floor(1. * dist_len / quant_bins)
     dist_q = torch.zeros([quant_bins])
     dist_e = 0. * dist
     for i in range(quant_bins):
@@ -46,4 +47,5 @@ def entropy_calibration(model, qmodel, bin_number=2048, cali_number=128):
     m, m_idx = torch.min(divergence[cali_number:], 0)
     threshold = dist.min() + (m_idx + cali_number + 0.5) * bin_width
     log2_t = torch.log2(threshold)
-    qmodel.acti_log2_t = torch.nn.Parameter(log2_t) if qmodel.retrain else log2_t
+    qmodel.acti_log2_t = torch.nn.Parameter(
+        log2_t) if qmodel.retrain else log2_t
