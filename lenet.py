@@ -30,6 +30,7 @@ class lenet(nn.Module):
 
 net = lenet(quant=False)
 qnet = lenet(quant=True)
+qnet.load_state_dict(net.state_dict(), strict=False)
 x = torch.rand(50, 1, 28, 28)
 handler = tqt.threshold.hook_handler
 handles = tqt.threshold.add_hook(net.proc, handler)
