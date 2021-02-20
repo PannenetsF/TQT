@@ -13,6 +13,7 @@ class ReLU(nn.ReLU):
     def __init__(self, inplace=False, acti_bit_width=8, retrain=True):
         super().__init__(inplace)
         self.acti_bit_width = acti_bit_width
+        self.retrain = retrain
         if retrain is True:
             self.acti_log2_t = nn.Parameter(torch.Tensor(1))
             self.init_param(retrain)
@@ -34,6 +35,7 @@ class ReLU6(nn.ReLU6):
     def __init__(self, inplace=False, acti_bit_width=8, retrain=True):
         super().__init__(inplace)
         self.acti_bit_width = acti_bit_width
+        self.retrain = retrain
         if retrain is True:
             self.acti_log2_t = nn.Parameter(torch.Tensor(1))
             self.init_param(retrain)

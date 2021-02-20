@@ -24,6 +24,7 @@ class BatchNorm2d(nn.BatchNorm2d):
 
         self.weight_bit_width = weight_bit_width
         self.bias_bit_width = bias_bit_width
+        self.retrain = retrain
         if retrain is True:
             self.weight_log2_t = nn.Parameter(torch.Tensor(1))
             self.bias_log2_t = nn.Parameter(torch.Tensor(1))

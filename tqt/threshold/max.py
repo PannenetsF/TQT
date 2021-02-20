@@ -2,19 +2,19 @@ import torch
 import torch.nn as nn
 
 
-def threshold_weight_max(module):
+def threshold_weight_max(module, qmodule):
     max_value = module.weight.abs().flatten().max().data
-    module.weight_log2_t = torch.nn.Parameter(
-        torch.log2(max_value)) if module.retrain else torch.log2(max_value)
+    qmodule.weight_log2_t = torch.nn.Parameter(
+        torch.log2(max_value)) if qmodule.retrain else torch.log2(max_value)
 
 
-def threshold_bias_max(module):
+def threshold_bias_max(module, qmodule):
     max_value = module.bias.abs().flatten().max().data
-    module.bias_log2_t = torch.nn.Parameter(
-        torch.log2(max_value)) if module.retrain else torch.log2(max_value)
+    qmodule.bias_log2_t = torch.nn.Parameter(
+        torch.log2(max_value)) if qmodule.retrain else torch.log2(max_value)
 
 
-def threshold_activation_max(module):
+def threshold_activation_max(module, qmodule):
     max_value = module.hook_out.abs().flatten().max().data
-    module.acti_log2_t = torch.nn.Parameter(
-        torch.log2(max_value)) if module.retrain else torch.log2(max_value)
+    qmodule.acti_log2_t = torch.nn.Parameter(
+        torch.log2(max_value)) if qmodule.retrain else torch.log2(max_value)
