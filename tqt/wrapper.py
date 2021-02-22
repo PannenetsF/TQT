@@ -36,7 +36,16 @@ OFUNCTION = {
                                          padding=padding,
                                          dilation=dilation,
                                          return_indices=return_indices,
-                                         ceil_mode=ceil_mode)
+                                         ceil_mode=ceil_mode),
+    'Adder2d':
+    lambda input_channel, output_channel, kernel_size, stride=1, padding=0,
+    bias=False, weight_bit_width=8, bias_bit_width=16, retrain=True: tqt.extra.
+    Adder2d(input_channel,
+            output_channel,
+            kernel_size,
+            stride=stride,
+            padding=padding,
+            bias=bias)
 }
 
 QFUNCTION = {
@@ -89,5 +98,17 @@ QFUNCTION = {
                                          padding=padding,
                                          dilation=dilation,
                                          return_indices=return_indices,
-                                         ceil_mode=ceil_mode)
+                                         ceil_mode=ceil_mode),
+    'Adder2d':
+    lambda input_channel, output_channel, kernel_size, stride=1, padding=0,
+    bias=False, weight_bit_width=8, bias_bit_width=16, retrain=True: tqt.
+    Adder2d(input_channel,
+            output_channel,
+            kernel_size,
+            stride=stride,
+            padding=padding,
+            bias=bias,
+            weight_bit_width=weight_bit_width,
+            bias_bit_width=bias_bit_width,
+            retrain=retrain)
 }
