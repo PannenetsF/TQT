@@ -34,3 +34,56 @@ Just 3 steps!
 1. Add hook for output storage.
 2. Adjust the threshold via `tqt.threshold` 
 3. Remove hook.
+
+## Train Something with Pre-Trained Model
+
+Supposed that you have a pretrained model, and it's hard to change all keys in its state dictionary. More often, it may contain lots of `nn.Module` but not specially `nn.ModuleList`. A dirty but useful way is simply change the `import torch.nn as nn` to `import tqt.function as nn`. You can get a quant-style network with all previous keys unchanged! 
+
+Through `tqt.threshold.add_hook_general`, we can add hook for any network if you add a list containing all operations used in forward.
+
+Let's get some example: 
+
+```py
+# noquant.py
+import torch.nn as nn 
+
+class myNet(nn.Module):
+    def __init__(self):
+        ...
+    def forward(self, x):
+        ...
+```
+
+and
+
+```py
+# quant.py
+import tqt.function as nn 
+
+class myNet(nn.Module):
+    def __init__(self):
+        ...
+    def forward(self, x):
+        ...
+```
+
+We can load and retrain by:
+
+```py
+# main.py 
+import tqt
+from unquant import myNet as oNet
+from quant import myNet as qNet
+
+handler = tqt.threshold.hook_handler
+
+train(oNet) ... 
+funct_list = [oNet.xx, oNet.yy, ...]
+qfunct_list = [qNet.xx, qNet.yy, ...]
+for funct in funct_list:
+    handles = tqt.threshold.add_hook_general(funct, handler)
+qNet.load_state_dict(oNet.state_dict(), strict=False)
+for (netproc, qnetproc) in zip(funct_list, qfunct_list):
+    tqt.threshold.init.init_network(netproc, qnetproc, show=True)
+retrain(qNet)
+```
