@@ -33,14 +33,19 @@ qnet = lenet(quant=True)
 qnet.load_state_dict(net.state_dict(), strict=False)
 x = torch.rand(50, 1, 28, 28)
 handler = tqt.threshold.hook_handler
-handles = tqt.threshold.add_hook(net.proc, handler)
+handles = tqt.threshold.add_hook_general(net.proc, handler)
 net(x)
-for idx, (np, qp) in enumerate(zip(net.proc, qnet.proc)):
-    if hasattr(qp, 'acti_log2_t'):
-        tqt.threshold.kl.entropy_calibration(np, qp)
-    if hasattr(qp, 'weight_log2_t'):
-        tqt.threshold.max.threshold_weight_max(np, qp)
-    if hasattr(qp, 'bias_log2_t'):
-        tqt.threshold.max.threshold_bias_max(np, qp)
-    print(idx, ': quanted')
+# for idx, (np, qp) in enumerate(zip(net.proc, qnet.proc)):
+#     if hasattr(qp, 'acti_log2_t'):
+#         tqt.threshold.kl.entropy_calibration(np, qp)
+#     if hasattr(qp, 'weight_log2_t'):
+#         tqt.threshold.max.threshold_weight_max(np, qp)
+#     if hasattr(qp, 'bias_log2_t'):
+#         tqt.threshold.max.threshold_bias_max(np, qp)
+#     print(idx, ': quanted')
+tqt.threshold.init.init_network(net.proc, qnet.proc, show=True)
 tqt.threshold.remove_hook(handles)
+torch.save(qnet.state_dict(), 'save_qnet.pth')
+q_state = torch.load('save_qnet.pth')
+new_qnet = lenet(quant=True)
+new_qnet.load_state_dict(q_state)
