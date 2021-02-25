@@ -16,13 +16,8 @@ class ReLU(nn.ReLU):
         self.retrain = retrain
         if retrain is True:
             self.acti_log2_t = nn.Parameter(torch.Tensor(1))
-            self.init_param(retrain)
         else:
             self.acti_log2_t = torch.Tensor(1)
-            self.init_param(retrain)
-
-    def init_param(self, retrain):
-        pass
 
     def relu_forward(self, input):
         return qunsigned(F.relu(input), self.acti_log2_t, self.acti_bit_width)
@@ -38,13 +33,8 @@ class ReLU6(nn.ReLU6):
         self.retrain = retrain
         if retrain is True:
             self.acti_log2_t = nn.Parameter(torch.Tensor(1))
-            self.init_param(retrain)
         else:
             self.acti_log2_t = torch.Tensor(1)
-            self.init_param(retrain)
-
-    def init_param(self, retrain):
-        pass
 
     def relu6_forward(self, input):
         return qunsigned(F.relu6(input), self.acti_log2_t, self.acti_bit_width)

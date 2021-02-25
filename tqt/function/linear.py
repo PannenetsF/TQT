@@ -24,14 +24,9 @@ class Linear(nn.Linear):
         if retrain is True:
             self.weight_log2_t = nn.Parameter(torch.Tensor(1))
             self.bias_log2_t = nn.Parameter(torch.Tensor(1))
-            self.init_param(retrain)
         else:
             self.weight_log2_t = torch.Tensor(1)
             self.bias_log2_t = torch.Tensor(1)
-            self.init_param(retrain)
-        pass
-
-    def init_param(self, retrain):
         pass
 
     def linear_forward(self, input):
