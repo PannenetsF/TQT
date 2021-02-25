@@ -65,7 +65,7 @@ def init_network(net_proc,
             init_weight(net_proc, qnet_proc, method=weight_method)
             if show:
                 print(qnet_proc, ': weight threshold is quanted')
-        if hasattr(qnet_proc, 'bias_log2_t'):
+        if hasattr(qnet_proc, 'bias_log2_t') and qnet_proc.bias is not None:
             init_bias(net_proc, qnet_proc, method=bias_method)
             if show:
                 print(qnet_proc, ': bias threshold is quanted')
