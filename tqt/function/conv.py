@@ -42,6 +42,13 @@ class Conv2d(nn.Conv2d):
             self.weight_log2_t = torch.Tensor(1)
             self.bias_log2_t = torch.Tensor(1)
 
+    def static(self):
+        self.retrain = False
+        if isinstance(self.bias_log2_t, nn.Parameter):
+            self.bias_log2_t.requires_grad_(False)
+        if isinstance(self.weight_log2_t, nn.Parameter):
+            self.weight_log2_t.requires_grad_(False)
+
     def conv_forward(self, input):
         if self.bias is None:
             bias = None
