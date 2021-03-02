@@ -69,3 +69,42 @@ def init_network(net_proc,
             init_bias(net_proc, qnet_proc, method=bias_method)
             if show:
                 print(qnet_proc, ': bias threshold is quanted')
+
+
+def init_network_fromkeys(net,
+                          qnet,
+                          weight_method='max',
+                          bias_method='max',
+                          bin_number=2048,
+                          cali_number=128,
+                          show=True,
+                          module_name_preop=lambda x, net=None: x):
+    num_list = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+
+    def _getattr(obj, key):
+        stage = key.rsplit('.')
+        for i in stage:
+            if i[0] in num_list:
+                obj = obj[int(i)]
+            else:
+                obj = getattr(obj, i)
+        return obj
+
+    okeys = list(net.state_dict().keys())
+    okeys = [module_name_preop(x, net) for x in okeys]
+    mkeys = [x[:x.rfind('.')] for x in okeys]
+    for key in mkeys:
+        net_proc = _getattr(net, key)
+        qnet_proc = _getattr(qnet, key)
+        if hasattr(qnet_proc, 'acti_log2_t'):
+            init_acti(net_proc, qnet_proc, bin_number=2048, cali_number=128)
+            if show:
+                print(qnet_proc, ': activation threshold is quanted')
+        if hasattr(qnet_proc, 'weight_log2_t'):
+            init_weight(net_proc, qnet_proc, method=weight_method)
+            if show:
+                print(qnet_proc, ': weight threshold is quanted')
+        if hasattr(qnet_proc, 'bias_log2_t') and qnet_proc.bias is not None:
+            init_bias(net_proc, qnet_proc, method=bias_method)
+            if show:
+                print(qnet_proc, ': bias threshold is quanted')
