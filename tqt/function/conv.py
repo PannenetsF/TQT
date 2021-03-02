@@ -22,7 +22,8 @@ class Conv2d(nn.Conv2d):
                  padding_mode='zeros',
                  weight_bit_width=8,
                  bias_bit_width=16,
-                 retrain=True):
+                 retrain=True,
+                 quant=False):
         super().__init__(in_channels=in_channels,
                          out_channels=out_channels,
                          kernel_size=kernel_size,
@@ -35,6 +36,7 @@ class Conv2d(nn.Conv2d):
         self.weight_bit_width = weight_bit_width
         self.bias_bit_width = bias_bit_width
         self.retrain = retrain
+        self.quant = quant
         if retrain is True:
             self.weight_log2_t = nn.Parameter(torch.Tensor(1))
             self.bias_log2_t = nn.Parameter(torch.Tensor(1))
@@ -49,6 +51,12 @@ class Conv2d(nn.Conv2d):
         if isinstance(self.weight_log2_t, nn.Parameter):
             self.weight_log2_t.requires_grad_(False)
 
+    def quantilize(self):
+        self.quant = True
+
+    def floatilize(self):
+        self.quant = False
+
     def conv_forward(self, input):
         if self.bias is None:
             bias = None
@@ -59,8 +67,13 @@ class Conv2d(nn.Conv2d):
         return F.conv2d(input, weight, bias, self.stride, self.padding,
                         self.dilation, self.groups)
 
+    def conv_forward_unquant(self, input):
+        return F.conv2d(input, self.weight, self.bias, self.stride,
+                        self.padding, self.dilation, self.groups)
+
     def forward(self, input):
-        return self.conv_forward(input)
+        return self.conv_forward(
+            input) if self.quant else self.conv_forward_unquant(input)
 
 
 if __name__ == '__main__':

@@ -18,13 +18,15 @@ class BatchNorm2d(nn.BatchNorm2d):
                  track_running_stats=True,
                  weight_bit_width=8,
                  bias_bit_width=16,
-                 retrain=True):
+                 retrain=True,
+                 quant=False):
         super().__init__(num_features, eps, momentum, affine,
                          track_running_stats)
 
         self.weight_bit_width = weight_bit_width
         self.bias_bit_width = bias_bit_width
         self.retrain = retrain
+        self.quant = quant
         if retrain is True:
             self.weight_log2_t = nn.Parameter(torch.Tensor(1))
             self.bias_log2_t = nn.Parameter(torch.Tensor(1))
@@ -38,6 +40,12 @@ class BatchNorm2d(nn.BatchNorm2d):
             self.bias_log2_t.requires_grad_(False)
         if isinstance(self.weight_log2_t, nn.Parameter):
             self.weight_log2_t.requires_grad_(False)
+
+    def quantilize(self):
+        self.quant = True
+
+    def floatilize(self):
+        self.quant = False
 
     def bn_forward(self, input):
         if self.affine is True:
@@ -55,5 +63,19 @@ class BatchNorm2d(nn.BatchNorm2d):
                                   running_var=self.running_var)
         return output
 
+    def bn_forward_unquant(input):
+        if self.affine is True:
+            output = F.batch_norm(input,
+                                  running_mean=self.running_mean,
+                                  running_var=self.running_var,
+                                  weight=self.weight,
+                                  bias=self.bias)
+        else:
+            output = F.batch_norm(input,
+                                  running_mean=self.running_mean,
+                                  running_var=self.running_var)
+        return output
+
     def forward(self, input):
-        return self.bn_forward(input)
+        return self.bn_forward(
+            input) if self.quant else self.bn_forward_unquant(input)

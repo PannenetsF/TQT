@@ -21,7 +21,8 @@ class Adder2d(ex.Adder2d):
                  bias=False,
                  weight_bit_width=8,
                  bias_bit_width=16,
-                 retrain=True):
+                 retrain=True,
+                 quant=False):
         super().__init__(input_channel,
                          output_channel,
                          kernel_size,
@@ -31,6 +32,7 @@ class Adder2d(ex.Adder2d):
         self.weight_bit_width = weight_bit_width
         self.bias_bit_width = bias_bit_width
         self.retrain = retrain
+        self.quant = quant
         if retrain is True:
             self.weight_log2_t = nn.Parameter(torch.Tensor(1))
             self.bias_log2_t = nn.Parameter(torch.Tensor(1))
@@ -38,6 +40,12 @@ class Adder2d(ex.Adder2d):
             self.weight_log2_t = torch.Tensor(1)
             self.bias_log2_t = torch.Tensor(1)
         pass
+
+    def quantilize(self):
+        self.quant = True
+
+    def floatilize(self):
+        self.quant = False
 
     def adder_forward(self, input):
         if self.bias is None:
@@ -52,8 +60,16 @@ class Adder2d(ex.Adder2d):
                                    stride=self.stride,
                                    padding=self.padding)
 
+    def adder_forward_unquant(self, input):
+        return ex.adder2d_function(input,
+                                   self.weight,
+                                   self.bias,
+                                   stride=self.stride,
+                                   padding=self.padding)
+
     def forward(self, input):
-        return self.adder_forward(input)
+        return self.adder_forward(
+            input) if self.quant else self.adder_forward_unquant(input)
 
 
 if __name__ == '__main__':
