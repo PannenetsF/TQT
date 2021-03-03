@@ -63,7 +63,7 @@ class BatchNorm2d(nn.BatchNorm2d):
                                   running_var=self.running_var)
         return output
 
-    def bn_forward_unquant(input):
+    def bn_forward_unquant(self, input):
         if self.affine is True:
             output = F.batch_norm(input,
                                   running_mean=self.running_mean,
