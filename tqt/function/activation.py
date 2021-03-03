@@ -10,7 +10,11 @@ from .number import qsigned, qunsigned
 
 
 class ReLU(nn.ReLU):
-    def __init__(self, inplace=False, acti_bit_width=8, retrain=True, quant=False):
+    def __init__(self,
+                 inplace=False,
+                 acti_bit_width=8,
+                 retrain=True,
+                 quant=False):
         super().__init__(inplace)
         self.acti_bit_width = acti_bit_width
         self.retrain = retrain
@@ -23,21 +27,26 @@ class ReLU(nn.ReLU):
     def relu_forward(self, input):
         return qunsigned(F.relu(input), self.acti_log2_t, self.acti_bit_width)
 
-    def relu_forward_unquant(self, inplace)
+    def relu_forward_unquant(self, input):
         return F.relu(input)
-    
+
     def quantilize(self):
-        self.quant = True 
-    
+        self.quant = True
+
     def floatilize(self):
         self.quant = False
 
     def forward(self, input):
-        return self.relu_forward(input) if self.quant else self.relu_forward_unquant(input)
+        return self.relu_forward(
+            input) if self.quant else self.relu_forward_unquant(input)
 
 
 class ReLU6(nn.ReLU6):
-    def __init__(self, inplace=False, acti_bit_width=8, retrain=True, quant=False):
+    def __init__(self,
+                 inplace=False,
+                 acti_bit_width=8,
+                 retrain=True,
+                 quant=False):
         super().__init__(inplace)
         self.acti_bit_width = acti_bit_width
         self.retrain = retrain
@@ -54,10 +63,11 @@ class ReLU6(nn.ReLU6):
         return F.relu6(input)
 
     def quantilize(self):
-        self.quant = True 
-    
+        self.quant = True
+
     def floatilize(self):
         self.quant = False
 
     def forward(self, input):
-        return self.relu6_forward(input) if self.quant else self.relu6_forward_unquant(input)
+        return self.relu6_forward(
+            input) if self.quant else self.relu6_forward_unquant(input)
