@@ -30,7 +30,11 @@ def quantize_bins_and_expand(dist, quant_bins):
     return dist_e
 
 
-def entropy_calibration(model, qmodel, bin_number=2048, cali_number=128):
+def entropy_calibration(model,
+                        qmodel,
+                        bin_number=2048,
+                        cali_number=128,
+                        eps=1e-8):
     dist = model.hook_out.flatten().data
     dist = torch.histc(dist, bins=bin_number)
     bin_width = (dist.max() - dist.min()) / bin_number
@@ -45,7 +49,7 @@ def entropy_calibration(model, qmodel, bin_number=2048, cali_number=128):
         divergence[i] = kl_divergence(ref_dist, can_dist)
 
     m, m_idx = torch.min(divergence[cali_number:], 0)
-    threshold = dist.min() + (m_idx + cali_number + 0.5) * bin_width
+    threshold = dist.min() + (m_idx + cali_number + 0.5) * bin_width + eps
     log2_t = torch.tensor([torch.log2(threshold)])
     qmodel.acti_log2_t = torch.nn.Parameter(
         log2_t) if qmodel.retrain else log2_t
