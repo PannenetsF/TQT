@@ -56,6 +56,13 @@ def init_network(net_proc,
                          weight_method=weight_method,
                          bias_method=bias_method,
                          show=show)
+    elif hasattr(net_proc, 'proc'):
+        for key in net_proc.proc:
+            init_network(getattr(net_proc, key),
+                         getattr(qnet_proc, key),
+                         weight_method=weight_method,
+                         bias_method=bias_method,
+                         show=show)
     else:  # nn.Module()
         if hasattr(qnet_proc, 'acti_log2_t'):
             init_acti(net_proc, qnet_proc, bin_number=2048, cali_number=128)
