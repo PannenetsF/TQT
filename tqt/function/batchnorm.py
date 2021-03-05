@@ -29,10 +29,12 @@ class BatchNorm2d(nn.BatchNorm2d):
         self.quant = quant
         if retrain is True:
             self.weight_log2_t = nn.Parameter(torch.Tensor(1))
-            self.bias_log2_t = nn.Parameter(torch.Tensor(1))
+            if self.bias is not None:
+                self.bias_log2_t = nn.Parameter(torch.Tensor(1))
         else:
             self.weight_log2_t = torch.Tensor(1)
-            self.bias_log2_t = torch.Tensor(1)
+            if self.bias is not None:
+                self.bias_log2_t = torch.Tensor(1)
 
     def static(self):
         self.retrain = False
