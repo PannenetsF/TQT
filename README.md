@@ -1,6 +1,15 @@
 # TQT
 TQT's pytorch implementation.
 
+- [TQT](#tqt)
+  - [TQT's modules](#tqts-modules)
+    - [TQT.function](#tqtfunction)
+    - [TQT.threshold](#tqtthreshold)
+  - [Build a network with TQT](#build-a-network-with-tqt)
+  - [Rebuild a network with TQT](#rebuild-a-network-with-tqt)
+  - [Initialize a network's threshold](#initialize-a-networks-threshold)
+  - [Train Something with Pre-Trained Model](#train-something-with-pre-trained-model)
+
 ## TQT's modules
 
 ### TQT.function 
@@ -39,6 +48,8 @@ Just 3 steps!
 
 Supposed that you have a pretrained model, and it's hard to change all keys in its state dictionary. More often, it may contain lots of `nn.Module` but not specially `nn.ModuleList`. A dirty but useful way is simply change the `import torch.nn as nn` to `import tqt.function as nn`. You can get a quant-style network with all previous keys unchanged! 
 
+All you need to do is add a list `self.proc` to the network module.
+
 Through `tqt.threshold.add_hook_general`, we can add hook for any network if you add a list containing all operations used in forward.
 
 Let's get some example: 
@@ -48,7 +59,12 @@ Let's get some example:
 import torch.nn as nn 
 
 class myNet(nn.Module):
-    def __init__(self):
+    def __init__(self, args):
+        # assume: all op used in forward are declared explicitly.
+        self.op1 = ... 
+        self.op2 = ...
+        if args:
+            self.op_args = ...
         ...
     def forward(self, x):
         ...
@@ -62,6 +78,13 @@ import tqt.function as nn
 
 class myNet(nn.Module):
     def __init__(self):
+        # assume: all op used in forward are declared explicitly.
+        self.proc = ['op1', 'op2']
+        self.op1 = ... 
+        self.op2 = ...
+        if args:
+            self.op_args = ...
+            self.proc.append('op_args')
         ...
     def forward(self, x):
         ...
@@ -87,3 +110,4 @@ for (netproc, qnetproc) in zip(funct_list, qfunct_list):
     tqt.threshold.init.init_network(netproc, qnetproc, show=True)
 retrain(qNet)
 ```
+
