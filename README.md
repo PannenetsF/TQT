@@ -9,6 +9,7 @@ TQT's pytorch implementation.
   - [Rebuild a network with TQT](#rebuild-a-network-with-tqt)
   - [Initialize a network's threshold](#initialize-a-networks-threshold)
   - [Train Something with Pre-Trained Model](#train-something-with-pre-trained-model)
+  - [Turn a network to quantilized or not](#turn-a-network-to-quantilized-or-not)
   - [Do analyse over the activations and weights](#do-analyse-over-the-activations-and-weights)
 
 ## TQT's modules
@@ -111,6 +112,10 @@ for (netproc, qnetproc) in zip(funct_list, qfunct_list):
     tqt.threshold.init.init_network(netproc, qnetproc, show=True)
 retrain(qNet)
 ```
+
+## Turn a network to quantilized or not
+
+With a network built by [method metioned](#train-something-with-pre-trained-model), we may need use a quant/or-not version. So we implement `tqt.utils.make_net_quant_or_not` to change its mode easily.
 
 ## Do analyse over the activations and weights
 
