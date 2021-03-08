@@ -49,7 +49,7 @@ def entropy_calibration(model,
         divergence[i] = kl_divergence(ref_dist, can_dist)
 
     m, m_idx = torch.min(divergence[cali_number:], 0)
-    threshold = dist.min() + (m_idx + cali_number + 0.5) * bin_width + eps
+    threshold = q.min() + (m_idx + cali_number + 0.5) * bin_width + eps
     log2_t = torch.tensor([torch.log2(threshold)])
     qmodel.acti_log2_t = torch.nn.Parameter(
         log2_t) if qmodel.retrain else log2_t
