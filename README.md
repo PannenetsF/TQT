@@ -11,6 +11,7 @@ TQT's pytorch implementation.
   - [Train Something with Pre-Trained Model](#train-something-with-pre-trained-model)
   - [Turn a network to quantilized or not](#turn-a-network-to-quantilized-or-not)
   - [Do analyse over the activations and weights](#do-analyse-over-the-activations-and-weights)
+- [Acknowledgment](#acknowledgment)
 
 ## TQT's modules
 
@@ -138,3 +139,11 @@ writer.add_histogram(i[0], i[1].cpu().data.flatten().detach().numpy())
 ```
 
 Similarly, the weights could be get from `net.named_parameters()`.
+
+# Acknowledgment 
+
+The initial version of tqt-torch is developed by [Jinyu Bai](https://github.com/buaabai). 
+
+The beta version was tested by [Jinghan Xu](https://github.com/Xu-Jinghan), based on whose feedback a lot of bugs were fixed.
+
+The original papar could be find at [Arxiv](https://arxiv.org/abs/1903.08066).
