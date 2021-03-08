@@ -9,6 +9,7 @@ TQT's pytorch implementation.
   - [Rebuild a network with TQT](#rebuild-a-network-with-tqt)
   - [Initialize a network's threshold](#initialize-a-networks-threshold)
   - [Train Something with Pre-Trained Model](#train-something-with-pre-trained-model)
+  - [Do analyse over the activations and weights](#do-analyse-over-the-activations-and-weights)
 
 ## TQT's modules
 
@@ -111,3 +112,24 @@ for (netproc, qnetproc) in zip(funct_list, qfunct_list):
 retrain(qNet)
 ```
 
+## Do analyse over the activations and weights
+
+Always, we need to do analysis over activations and weights to choose a proper way to quantilize the network. We implement some function do these. It's recommend do this with tensorboard.
+
+`tqt.threshold.get_hook` will get all hook output got from the forward with their module name as a tuple. 
+
+```py
+net = QNet()
+tqt.utils.make_net_quant_or_not(net, quant=True)
+tqt.threshold.add_hook_general(net, tqt.threshold.hook_handler)
+net.cuda()
+for i, (images, labels) in enumerate(data_test_loader):
+    net(images.cuda())
+    break
+out = get_hook(net, '', show=True
+for i in out:
+    print(i[0], i[1].shape)
+writer.add_histogram(i[0], i[1].cpu().data.flatten().detach().numpy())
+```
+
+Similarly, the weights could be get from `net.named_parameters()`.
