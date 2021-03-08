@@ -63,7 +63,6 @@ import torch.nn as nn
 
 class myNet(nn.Module):
     def __init__(self, args):
-        # assume: all op used in forward are declared explicitly.
         self.op1 = ... 
         self.op2 = ...
         if args:
@@ -81,8 +80,6 @@ import tqt.function as nn
 
 class myNet(nn.Module):
     def __init__(self):
-        # assume: all op used in forward are declared explicitly.
-        self.proc = ['op1', 'op2']
         self.op1 = ... 
         self.op2 = ...
         if args:
@@ -104,10 +101,7 @@ from quant import myNet as qNet
 handler = tqt.threshold.hook_handler
 
 train(oNet) ... 
-funct_list = [oNet.xx, oNet.yy, ...]
-qfunct_list = [qNet.xx, qNet.yy, ...]
-for funct in funct_list:
-    handles = tqt.threshold.add_hook_general(funct, handler)
+tqt.threshold.add_hook(oNet, 'oNet', handler)
 qNet.load_state_dict(oNet.state_dict(), strict=False)
 for (netproc, qnetproc) in zip(funct_list, qfunct_list):
     tqt.threshold.init.init_network(netproc, qnetproc, show=True)
@@ -127,12 +121,12 @@ Always, we need to do analysis over activations and weights to choose a proper w
 ```py
 net = QNet()
 tqt.utils.make_net_quant_or_not(net, quant=True)
-tqt.threshold.add_hook_general(net, tqt.threshold.hook_handler)
+tqt.threshold.add_hook(net, 'net', tqt.threshold.hook_handler)
 net.cuda()
 for i, (images, labels) in enumerate(data_test_loader):
     net(images.cuda())
     break
-out = get_hook(net, '', show=True
+out = get_hook(net, 'net', show=True)
 for i in out:
     print(i[0], i[1].shape)
 writer.add_histogram(i[0], i[1].cpu().data.flatten().detach().numpy())
