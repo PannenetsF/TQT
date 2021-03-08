@@ -62,3 +62,31 @@ def add_hook_fromchild(net, hook_handler):
     handles = []
     for i in net.modules():
         handles.extend(add_hook_general(i, hook_handler))
+
+
+def dirty_name(proc):
+    return str(type(proc)).rsplit('.')[-1][:-2]
+
+
+def get_hook(qnet_proc, name, show=False):
+    hooks_got = []
+    name += '.' + dirty_name(qnet_proc)
+    if isinstance(qnet_proc, nn.ModuleList):
+        for idx, proc in enumerate(qnet_proc):
+            hooks_got.extend(get_hook(proc, name + '.' + str(idx), show=show))
+    elif isinstance(qnet_proc, nn.Sequential):
+        for idx, proc in enumerate(qnet_proc.children()):
+            hooks_got.extend(get_hook(proc, name + '.' + str(idx), show=show))
+    elif isinstance(qnet_proc, nn.ModuleDict):
+        for key in qnet_proc.keys():
+            hooks_got.extend(
+                get_hook(qnet_proc[key], name + '.' + key, show=show))
+    elif hasattr(qnet_proc, 'proc'):
+        for key in qnet_proc.proc:
+            hooks_got.extend(
+                get_hook(getattr(qnet_proc, key), name + '.' + key, show=show))
+    else:  # nn.Module()
+        hooks_got.append((name, getattr(qnet_proc, 'hook_out')))
+        if show:
+            print(name, ' hook got')
+    return hooks_got
