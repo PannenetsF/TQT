@@ -11,6 +11,7 @@ TQT's pytorch implementation.
   - [Train Something with Pre-Trained Model](#train-something-with-pre-trained-model)
   - [Turn a network to quantilized or not](#turn-a-network-to-quantilized-or-not)
   - [Do analyse over the activations and weights](#do-analyse-over-the-activations-and-weights)
+- [Contributing](#contributing)
 - [Acknowledgment](#acknowledgment)
 
 ## TQT's modules
@@ -133,6 +134,15 @@ writer.add_histogram(i[0], i[1].cpu().data.flatten().detach().numpy())
 ```
 
 Similarly, the weights could be get from `net.named_parameters()`.
+
+
+# Contributing 
+
+It will be great of you to make this project better! There is some ways to contribute!
+
+1. To start with, issues and feature request could let maintainers know what's wrong or anything essential to be added. 
+2. If you use the package in you work/repo, just cite the repo and add a dependency note! 
+3. You can add some function in `torch.nn` like `HardTanh` and feel free to open a pull request! The code style is simple as [here](style.md).
 
 # Acknowledgment 
 
