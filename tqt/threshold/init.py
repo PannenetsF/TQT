@@ -11,9 +11,10 @@ def init_weight(net_module, qnet_module, method='max'):
         threshold_weight_3sd(net_module, qnet_module)
     else:
         raise NotImplementedError()
-    qnet_module.weight.data = qsigned(qnet_module.weight,
-                                      qnet_module.weight_log2_t,
-                                      qnet_module.weight_bit_width)
+    qnet_module.weight.data = qsigned(
+        qnet_module.weight,
+        qnet_module.weight_log2_t.to(qnet_module.weight.device),
+        qnet_module.weight_bit_width)
 
 
 def init_bias(net_module, qnet_module, method='max'):
@@ -23,8 +24,9 @@ def init_bias(net_module, qnet_module, method='max'):
         threshold_bias_3sd(net_module, qnet_module)
     else:
         raise NotImplementedError()
-    qnet_module.bias.data = qsigned(qnet_module.bias, qnet_module.bias_log2_t,
-                                    qnet_module.bias_bit_width)
+    qnet_module.bias.data = qsigned(
+        qnet_module.bias, qnet_module.bias_log2_t.to(qnet_module.bias.device),
+        qnet_module.bias_bit_width)
 
 
 def init_acti(net_module, qnet_module, bin_number=2048, cali_number=128):
