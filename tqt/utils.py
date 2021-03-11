@@ -11,15 +11,30 @@ def _getattr(obj, key):
     return obj
 
 
-def make_net_quant_or_not(net,
-                          quant=True,
-                          module_name_preop=lambda x, net=None: x):
-    okeys = list(net.state_dict().keys())
-    okeys = [module_name_preop(x, net) for x in okeys]
-    mkeys = [x[:x.rfind('.')] for x in okeys]
-    for key in mkeys:
-        net_proc = _getattr(net, key)
+def _isinstance(obj, cls_list):
+    flag_list = [isinstance(obj, cls) for cls in cls_list]
+    flag = False
+    for x in flag_list:
+        flag = x or flag
+    return flag
+
+
+def make_net_quant_or_not(net_proc, name, quant=True, exclude=[], show=False):
+    keys = list(net_proc._modules.keys())
+    if keys == []:
         if hasattr(net_proc, 'quant'):
-            getattr(net_proc, 'quantilize')() if quant else getattr(
-                net_proc, 'floatilize')
-            print(net_proc)
+            if not _isinstance(net_proc, exclude):
+                getattr(net_proc, 'quantilize')() if quant else getattr(
+                    net_proc, 'floatilize')
+                if show:
+                    print(name, ' is quanted')
+            else:
+                if show:
+                    print(name, 'is excluded')
+    else:
+        for key in keys:
+            make_net_quant_or_not(net_proc._modules[key],
+                                  name + f'.{key}',
+                                  quant=quant,
+                                  exclude=exclude,
+                                  show=show)
