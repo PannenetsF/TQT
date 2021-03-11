@@ -25,10 +25,11 @@ def make_net_quant_or_not(net_proc, name, quant=True, exclude=[], show=False):
         if hasattr(net_proc, 'quant'):
             if not _isinstance(net_proc, exclude):
                 getattr(net_proc, 'quantilize')() if quant else getattr(
-                    net_proc, 'floatilize')
+                    net_proc, 'floatilize')()
                 if show:
                     print(name, ' is quanted')
             else:
+                getattr(net_proc, 'floatilize')()
                 if show:
                     print(name, 'is excluded')
     else:
