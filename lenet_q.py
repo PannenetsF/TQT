@@ -33,5 +33,10 @@ class LeNet(nn.Module):
 if __name__ == '__main__':
     x = torch.rand(3, 1, 28, 28)
     net = LeNet()
-    tqt.utils.make_net_quant_or_not(net, True)
+    tqt.utils.make_net_quant_or_not(net,
+                                    'net',
+                                    quant=True,
+                                    exclude=[torch.nn.ReLU],
+                                    show=True)
+    tqt.threshold.init.init_network(net, net, 'net', show=True)
     print(net(x).shape)
