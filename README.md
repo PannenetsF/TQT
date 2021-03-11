@@ -9,7 +9,8 @@ TQT's pytorch implementation.
   - [Rebuild a network with TQT](#rebuild-a-network-with-tqt)
   - [Initialize a network's threshold](#initialize-a-networks-threshold)
   - [Train Something with Pre-Trained Model](#train-something-with-pre-trained-model)
-  - [Turn a network to quantilized or not](#turn-a-network-to-quantilized-or-not)
+  - [Turn a network to quantized or not](#turn-a-network-to-quantized-or-not)
+  - [Exclude some types of module](#exclude-some-types-of-module)
   - [Do analyse over the activations and weights](#do-analyse-over-the-activations-and-weights)
 - [Contributing](#contributing)
 - [Acknowledgment](#acknowledgment)
@@ -18,7 +19,7 @@ TQT's pytorch implementation.
 
 ### TQT.function 
 
-`function` is a re-impletement of `torch.nn.modules`. Besides all the args used in the original function, a quantilized function get 2 kind of optional arguments: `bit_width` and `retrain`. 
+`function` is a re-impletement of `torch.nn.modules`. Besides all the args used in the original function, a quantized function get 2 kind of optional arguments: `bit_width` and `retrain`. 
 
 `bit_width` has 2 type: weight/bias or activation. 
 
@@ -38,7 +39,7 @@ You'd better use `nn.ModuleList` and append every operation after it. If there'r
 
 ## Rebuild a network with TQT 
 
-Much often we need to re-train a network, and we can do a quick job with `lambda`. As you can see in the file `lenet.py`, with the change of the wrapper, a net could be simply converted into a quantilized one. 
+Much often we need to re-train a network, and we can do a quick job with `lambda`. As you can see in the file `lenet.py`, with the change of the wrapper, a net could be simply converted into a quantized one. 
 
 ## Initialize a network's threshold 
 
@@ -109,13 +110,25 @@ for (netproc, qnetproc) in zip(funct_list, qfunct_list):
 retrain(qNet)
 ```
 
-## Turn a network to quantilized or not
+## Turn a network to quantized or not
 
 With a network built by [method metioned](#train-something-with-pre-trained-model), we may need use a quant/or-not version. So we implement `tqt.utils.make_net_quant_or_not` to change its mode easily.
 
+## Exclude some types of module
+
+Normally we wil disable the quantization of batchnorm modules, you can simply exclude the bn in `tqt.utils.make_net_quant_or_not` like:
+
+```py
+tqt.utils.make_net_quant_or_not(net,
+                                'net',
+                                quant=True,
+                                exclude=[torch.nn.BatchNorm2d],
+                                show=True)
+```
+
 ## Do analyse over the activations and weights
 
-Always, we need to do analysis over activations and weights to choose a proper way to quantilize the network. We implement some function do these. It's recommend do this with tensorboard.
+Always, we need to do analysis over activations and weights to choose a proper way to quantize the network. We implement some function do these. It's recommend do this with tensorboard.
 
 `tqt.threshold.get_hook` will get all hook output got from the forward with their module name as a tuple. 
 
