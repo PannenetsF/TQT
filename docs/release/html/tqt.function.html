@@ -1,0 +1,687 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tqt.function package &#8212; tqt-torch 0.1 beta documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="tqt.function.extra package" href="tqt.function.extra.html" />
+    <link rel="prev" title="tqt package" href="tqt.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="tqt-function-package">
+<h1>tqt.function package<a class="headerlink" href="#tqt-function-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tqt.function.extra.html">tqt.function.extra package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tqt.function.extra.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tqt.function.extra.html#module-tqt.function.extra.adder">tqt.function.extra.adder module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tqt.function.extra.html#module-tqt.function.extra">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-tqt.function.activation">
+<span id="tqt-function-activation-module"></span><h2>tqt.function.activation module<a class="headerlink" href="#module-tqt.function.activation" title="Permalink to this headline">¶</a></h2>
+<p>Provide quantilized form of torch.nn.modules.activation</p>
+<dl class="py class">
+<dt id="tqt.function.activation.ReLU">
+<em class="property">class </em><code class="sig-prename descclassname">tqt.function.activation.</code><code class="sig-name descname">ReLU</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">inplace</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">acti_bit_width</span><span class="o">=</span><span class="default_value">8</span></em>, <em class="sig-param"><span class="n">retrain</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">quant</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/activation.html#ReLU"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.activation.ReLU" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.activation.ReLU</span></code></p>
+<dl class="py method">
+<dt id="tqt.function.activation.ReLU.floatilize">
+<code class="sig-name descname">floatilize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/activation.html#ReLU.floatilize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.activation.ReLU.floatilize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.activation.ReLU.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/activation.html#ReLU.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.activation.ReLU.forward" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tqt.function.activation.ReLU.inplace">
+<code class="sig-name descname">inplace</code><a class="headerlink" href="#tqt.function.activation.ReLU.inplace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.activation.ReLU.quantilize">
+<code class="sig-name descname">quantilize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/activation.html#ReLU.quantilize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.activation.ReLU.quantilize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.activation.ReLU.relu_forward">
+<code class="sig-name descname">relu_forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/activation.html#ReLU.relu_forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.activation.ReLU.relu_forward" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.activation.ReLU.relu_forward_unquant">
+<code class="sig-name descname">relu_forward_unquant</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/activation.html#ReLU.relu_forward_unquant"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.activation.ReLU.relu_forward_unquant" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="tqt.function.activation.ReLU6">
+<em class="property">class </em><code class="sig-prename descclassname">tqt.function.activation.</code><code class="sig-name descname">ReLU6</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">inplace</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">acti_bit_width</span><span class="o">=</span><span class="default_value">8</span></em>, <em class="sig-param"><span class="n">retrain</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">quant</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/activation.html#ReLU6"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.activation.ReLU6" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.activation.ReLU6</span></code></p>
+<dl class="py method">
+<dt id="tqt.function.activation.ReLU6.floatilize">
+<code class="sig-name descname">floatilize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/activation.html#ReLU6.floatilize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.activation.ReLU6.floatilize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.activation.ReLU6.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/activation.html#ReLU6.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.activation.ReLU6.forward" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tqt.function.activation.ReLU6.inplace">
+<code class="sig-name descname">inplace</code><a class="headerlink" href="#tqt.function.activation.ReLU6.inplace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tqt.function.activation.ReLU6.max_val">
+<code class="sig-name descname">max_val</code><a class="headerlink" href="#tqt.function.activation.ReLU6.max_val" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tqt.function.activation.ReLU6.min_val">
+<code class="sig-name descname">min_val</code><a class="headerlink" href="#tqt.function.activation.ReLU6.min_val" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.activation.ReLU6.quantilize">
+<code class="sig-name descname">quantilize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/activation.html#ReLU6.quantilize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.activation.ReLU6.quantilize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.activation.ReLU6.relu6_forward">
+<code class="sig-name descname">relu6_forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/activation.html#ReLU6.relu6_forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.activation.ReLU6.relu6_forward" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.activation.ReLU6.relu6_forward_unquant">
+<code class="sig-name descname">relu6_forward_unquant</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/activation.html#ReLU6.relu6_forward_unquant"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.activation.ReLU6.relu6_forward_unquant" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="tqt.function.activation.qsigned">
+<code class="sig-prename descclassname">tqt.function.activation.</code><code class="sig-name descname">qsigned</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tqt.function.activation.qsigned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="tqt.function.activation.qunsigned">
+<code class="sig-prename descclassname">tqt.function.activation.</code><code class="sig-name descname">qunsigned</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tqt.function.activation.qunsigned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-tqt.function.adder">
+<span id="tqt-function-adder-module"></span><h2>tqt.function.adder module<a class="headerlink" href="#module-tqt.function.adder" title="Permalink to this headline">¶</a></h2>
+<p>Provide quantilized form of Adder2d, <a class="reference external" href="https://arxiv.org/pdf/1912.13200.pdf">https://arxiv.org/pdf/1912.13200.pdf</a></p>
+<dl class="py class">
+<dt id="tqt.function.adder.Adder2d">
+<em class="property">class </em><code class="sig-prename descclassname">tqt.function.adder.</code><code class="sig-name descname">Adder2d</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_channel</span></em>, <em class="sig-param"><span class="n">output_channel</span></em>, <em class="sig-param"><span class="n">kernel_size</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">bias</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">weight_bit_width</span><span class="o">=</span><span class="default_value">8</span></em>, <em class="sig-param"><span class="n">bias_bit_width</span><span class="o">=</span><span class="default_value">16</span></em>, <em class="sig-param"><span class="n">retrain</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">quant</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/adder.html#Adder2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.adder.Adder2d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="tqt.function.extra.html#tqt.function.extra.adder.Adder2d" title="tqt.function.extra.adder.Adder2d"><code class="xref py py-class docutils literal notranslate"><span class="pre">tqt.function.extra.adder.Adder2d</span></code></a></p>
+<dl class="py method">
+<dt id="tqt.function.adder.Adder2d.adder_forward">
+<code class="sig-name descname">adder_forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/adder.html#Adder2d.adder_forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.adder.Adder2d.adder_forward" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.adder.Adder2d.adder_forward_unquant">
+<code class="sig-name descname">adder_forward_unquant</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/adder.html#Adder2d.adder_forward_unquant"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.adder.Adder2d.adder_forward_unquant" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.adder.Adder2d.floatilize">
+<code class="sig-name descname">floatilize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/adder.html#Adder2d.floatilize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.adder.Adder2d.floatilize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.adder.Adder2d.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/adder.html#Adder2d.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.adder.Adder2d.forward" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.adder.Adder2d.quantilize">
+<code class="sig-name descname">quantilize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/adder.html#Adder2d.quantilize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.adder.Adder2d.quantilize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tqt.function.adder.Adder2d.training">
+<code class="sig-name descname">training</code><a class="headerlink" href="#tqt.function.adder.Adder2d.training" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="tqt.function.adder.qsigned">
+<code class="sig-prename descclassname">tqt.function.adder.</code><code class="sig-name descname">qsigned</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tqt.function.adder.qsigned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-tqt.function.batchnorm">
+<span id="tqt-function-batchnorm-module"></span><h2>tqt.function.batchnorm module<a class="headerlink" href="#module-tqt.function.batchnorm" title="Permalink to this headline">¶</a></h2>
+<p>Provide quantilized form of torch.nn.modules.batchnorm</p>
+<dl class="py class">
+<dt id="tqt.function.batchnorm.BatchNorm2d">
+<em class="property">class </em><code class="sig-prename descclassname">tqt.function.batchnorm.</code><code class="sig-name descname">BatchNorm2d</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">num_features</span></em>, <em class="sig-param"><span class="n">eps</span><span class="o">=</span><span class="default_value">1e-05</span></em>, <em class="sig-param"><span class="n">momentum</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">affine</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">track_running_stats</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">weight_bit_width</span><span class="o">=</span><span class="default_value">8</span></em>, <em class="sig-param"><span class="n">bias_bit_width</span><span class="o">=</span><span class="default_value">16</span></em>, <em class="sig-param"><span class="n">retrain</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">quant</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/batchnorm.html#BatchNorm2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.batchnorm.BatchNorm2d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.batchnorm.BatchNorm2d</span></code></p>
+<dl class="py attribute">
+<dt id="tqt.function.batchnorm.BatchNorm2d.affine">
+<code class="sig-name descname">affine</code><a class="headerlink" href="#tqt.function.batchnorm.BatchNorm2d.affine" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.batchnorm.BatchNorm2d.bn_forward">
+<code class="sig-name descname">bn_forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/batchnorm.html#BatchNorm2d.bn_forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.batchnorm.BatchNorm2d.bn_forward" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.batchnorm.BatchNorm2d.bn_forward_unquant">
+<code class="sig-name descname">bn_forward_unquant</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/batchnorm.html#BatchNorm2d.bn_forward_unquant"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.batchnorm.BatchNorm2d.bn_forward_unquant" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tqt.function.batchnorm.BatchNorm2d.eps">
+<code class="sig-name descname">eps</code><a class="headerlink" href="#tqt.function.batchnorm.BatchNorm2d.eps" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.batchnorm.BatchNorm2d.floatilize">
+<code class="sig-name descname">floatilize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/batchnorm.html#BatchNorm2d.floatilize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.batchnorm.BatchNorm2d.floatilize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.batchnorm.BatchNorm2d.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/batchnorm.html#BatchNorm2d.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.batchnorm.BatchNorm2d.forward" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tqt.function.batchnorm.BatchNorm2d.momentum">
+<code class="sig-name descname">momentum</code><a class="headerlink" href="#tqt.function.batchnorm.BatchNorm2d.momentum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tqt.function.batchnorm.BatchNorm2d.num_features">
+<code class="sig-name descname">num_features</code><a class="headerlink" href="#tqt.function.batchnorm.BatchNorm2d.num_features" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.batchnorm.BatchNorm2d.quantilize">
+<code class="sig-name descname">quantilize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/batchnorm.html#BatchNorm2d.quantilize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.batchnorm.BatchNorm2d.quantilize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.batchnorm.BatchNorm2d.static">
+<code class="sig-name descname">static</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/batchnorm.html#BatchNorm2d.static"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.batchnorm.BatchNorm2d.static" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tqt.function.batchnorm.BatchNorm2d.track_running_stats">
+<code class="sig-name descname">track_running_stats</code><a class="headerlink" href="#tqt.function.batchnorm.BatchNorm2d.track_running_stats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="tqt.function.batchnorm.qsigned">
+<code class="sig-prename descclassname">tqt.function.batchnorm.</code><code class="sig-name descname">qsigned</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tqt.function.batchnorm.qsigned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-tqt.function.conv">
+<span id="tqt-function-conv-module"></span><h2>tqt.function.conv module<a class="headerlink" href="#module-tqt.function.conv" title="Permalink to this headline">¶</a></h2>
+<p>Provide quantilized form of torch.nn.modules.conv</p>
+<dl class="py class">
+<dt id="tqt.function.conv.Conv2d">
+<em class="property">class </em><code class="sig-prename descclassname">tqt.function.conv.</code><code class="sig-name descname">Conv2d</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_channels</span></em>, <em class="sig-param"><span class="n">out_channels</span></em>, <em class="sig-param"><span class="n">kernel_size</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">dilation</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">groups</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">bias</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">padding_mode</span><span class="o">=</span><span class="default_value">'zeros'</span></em>, <em class="sig-param"><span class="n">weight_bit_width</span><span class="o">=</span><span class="default_value">8</span></em>, <em class="sig-param"><span class="n">bias_bit_width</span><span class="o">=</span><span class="default_value">16</span></em>, <em class="sig-param"><span class="n">retrain</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">quant</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/conv.html#Conv2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.conv.Conv2d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.conv.Conv2d</span></code></p>
+<dl class="py attribute">
+<dt id="tqt.function.conv.Conv2d.bias">
+<code class="sig-name descname">bias</code><a class="headerlink" href="#tqt.function.conv.Conv2d.bias" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.conv.Conv2d.conv_forward">
+<code class="sig-name descname">conv_forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/conv.html#Conv2d.conv_forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.conv.Conv2d.conv_forward" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.conv.Conv2d.conv_forward_unquant">
+<code class="sig-name descname">conv_forward_unquant</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/conv.html#Conv2d.conv_forward_unquant"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.conv.Conv2d.conv_forward_unquant" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tqt.function.conv.Conv2d.dilation">
+<code class="sig-name descname">dilation</code><a class="headerlink" href="#tqt.function.conv.Conv2d.dilation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.conv.Conv2d.floatilize">
+<code class="sig-name descname">floatilize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/conv.html#Conv2d.floatilize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.conv.Conv2d.floatilize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.conv.Conv2d.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/conv.html#Conv2d.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.conv.Conv2d.forward" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tqt.function.conv.Conv2d.groups">
+<code class="sig-name descname">groups</code><a class="headerlink" href="#tqt.function.conv.Conv2d.groups" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tqt.function.conv.Conv2d.kernel_size">
+<code class="sig-name descname">kernel_size</code><a class="headerlink" href="#tqt.function.conv.Conv2d.kernel_size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tqt.function.conv.Conv2d.out_channels">
+<code class="sig-name descname">out_channels</code><a class="headerlink" href="#tqt.function.conv.Conv2d.out_channels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tqt.function.conv.Conv2d.output_padding">
+<code class="sig-name descname">output_padding</code><a class="headerlink" href="#tqt.function.conv.Conv2d.output_padding" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tqt.function.conv.Conv2d.padding">
+<code class="sig-name descname">padding</code><a class="headerlink" href="#tqt.function.conv.Conv2d.padding" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tqt.function.conv.Conv2d.padding_mode">
+<code class="sig-name descname">padding_mode</code><a class="headerlink" href="#tqt.function.conv.Conv2d.padding_mode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.conv.Conv2d.quantilize">
+<code class="sig-name descname">quantilize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/conv.html#Conv2d.quantilize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.conv.Conv2d.quantilize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.conv.Conv2d.static">
+<code class="sig-name descname">static</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/conv.html#Conv2d.static"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.conv.Conv2d.static" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tqt.function.conv.Conv2d.stride">
+<code class="sig-name descname">stride</code><a class="headerlink" href="#tqt.function.conv.Conv2d.stride" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tqt.function.conv.Conv2d.transposed">
+<code class="sig-name descname">transposed</code><a class="headerlink" href="#tqt.function.conv.Conv2d.transposed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tqt.function.conv.Conv2d.weight">
+<code class="sig-name descname">weight</code><a class="headerlink" href="#tqt.function.conv.Conv2d.weight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="tqt.function.conv.qsigned">
+<code class="sig-prename descclassname">tqt.function.conv.</code><code class="sig-name descname">qsigned</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tqt.function.conv.qsigned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-tqt.function.linear">
+<span id="tqt-function-linear-module"></span><h2>tqt.function.linear module<a class="headerlink" href="#module-tqt.function.linear" title="Permalink to this headline">¶</a></h2>
+<p>Provide quantilized form of torch.nn.modules.linear</p>
+<dl class="py class">
+<dt id="tqt.function.linear.Linear">
+<em class="property">class </em><code class="sig-prename descclassname">tqt.function.linear.</code><code class="sig-name descname">Linear</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_features</span></em>, <em class="sig-param"><span class="n">out_features</span></em>, <em class="sig-param"><span class="n">bias</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">weight_bit_width</span><span class="o">=</span><span class="default_value">8</span></em>, <em class="sig-param"><span class="n">bias_bit_width</span><span class="o">=</span><span class="default_value">16</span></em>, <em class="sig-param"><span class="n">retrain</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">quant</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/linear.html#Linear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.linear.Linear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.linear.Linear</span></code></p>
+<dl class="py method">
+<dt id="tqt.function.linear.Linear.floatilize">
+<code class="sig-name descname">floatilize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/linear.html#Linear.floatilize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.linear.Linear.floatilize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.linear.Linear.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/linear.html#Linear.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.linear.Linear.forward" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tqt.function.linear.Linear.in_features">
+<code class="sig-name descname">in_features</code><a class="headerlink" href="#tqt.function.linear.Linear.in_features" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.linear.Linear.linear_forward">
+<code class="sig-name descname">linear_forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/linear.html#Linear.linear_forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.linear.Linear.linear_forward" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.linear.Linear.linear_forward_unquant">
+<code class="sig-name descname">linear_forward_unquant</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/linear.html#Linear.linear_forward_unquant"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.linear.Linear.linear_forward_unquant" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tqt.function.linear.Linear.out_features">
+<code class="sig-name descname">out_features</code><a class="headerlink" href="#tqt.function.linear.Linear.out_features" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.linear.Linear.quantilize">
+<code class="sig-name descname">quantilize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/linear.html#Linear.quantilize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.linear.Linear.quantilize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.linear.Linear.static">
+<code class="sig-name descname">static</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/linear.html#Linear.static"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.linear.Linear.static" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tqt.function.linear.Linear.weight">
+<code class="sig-name descname">weight</code><a class="headerlink" href="#tqt.function.linear.Linear.weight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="tqt.function.linear.qsigned">
+<code class="sig-prename descclassname">tqt.function.linear.</code><code class="sig-name descname">qsigned</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tqt.function.linear.qsigned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-tqt.function.number">
+<span id="tqt-function-number-module"></span><h2>tqt.function.number module<a class="headerlink" href="#module-tqt.function.number" title="Permalink to this headline">¶</a></h2>
+<p>Two basic data types are defined for forward propagation and back propagation.
+Signed and unsigned fixed point data needed Straight-Through filter for back propagation.</p>
+<dl class="py class">
+<dt id="tqt.function.number.Ceil">
+<em class="property">class </em><code class="sig-prename descclassname">tqt.function.number.</code><code class="sig-name descname">Ceil</code><a class="reference internal" href="_modules/tqt/function/number.html#Ceil"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.number.Ceil" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.autograd.function.Function</span></code></p>
+<dl class="py method">
+<dt id="tqt.function.number.Ceil.backward">
+<em class="property">static </em><code class="sig-name descname">backward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ctx</span></em>, <em class="sig-param"><span class="n">grad_output</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/number.html#Ceil.backward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.number.Ceil.backward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines a formula for differentiating the operation.</p>
+<p>This function is to be overridden by all subclasses.</p>
+<p>It must accept a context <code class="xref py py-attr docutils literal notranslate"><span class="pre">ctx</span></code> as the first argument, followed by
+as many outputs did <a class="reference internal" href="#tqt.function.number.Ceil.forward" title="tqt.function.number.Ceil.forward"><code class="xref py py-func docutils literal notranslate"><span class="pre">forward()</span></code></a> return, and it should return as many
+tensors, as there were inputs to <a class="reference internal" href="#tqt.function.number.Ceil.forward" title="tqt.function.number.Ceil.forward"><code class="xref py py-func docutils literal notranslate"><span class="pre">forward()</span></code></a>. Each argument is the
+gradient w.r.t the given output, and each returned value should be the
+gradient w.r.t. the corresponding input.</p>
+<p>The context can be used to retrieve tensors saved during the forward
+pass. It also has an attribute <code class="xref py py-attr docutils literal notranslate"><span class="pre">ctx.needs_input_grad</span></code> as a tuple
+of booleans representing whether each input needs gradient. E.g.,
+<a class="reference internal" href="#tqt.function.number.Ceil.backward" title="tqt.function.number.Ceil.backward"><code class="xref py py-func docutils literal notranslate"><span class="pre">backward()</span></code></a> will have <code class="docutils literal notranslate"><span class="pre">ctx.needs_input_grad[0]</span> <span class="pre">=</span> <span class="pre">True</span></code> if the
+first input to <a class="reference internal" href="#tqt.function.number.Ceil.forward" title="tqt.function.number.Ceil.forward"><code class="xref py py-func docutils literal notranslate"><span class="pre">forward()</span></code></a> needs gradient computated w.r.t. the
+output.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.number.Ceil.forward">
+<em class="property">static </em><code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ctx</span></em>, <em class="sig-param"><span class="n">input</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/number.html#Ceil.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.number.Ceil.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs the operation.</p>
+<p>This function is to be overridden by all subclasses.</p>
+<p>It must accept a context ctx as the first argument, followed by any
+number of arguments (tensors or other types).</p>
+<p>The context can be used to store tensors that can be then retrieved
+during the backward pass.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="tqt.function.number.RoundToEven">
+<em class="property">class </em><code class="sig-prename descclassname">tqt.function.number.</code><code class="sig-name descname">RoundToEven</code><a class="reference internal" href="_modules/tqt/function/number.html#RoundToEven"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.number.RoundToEven" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.autograd.function.Function</span></code></p>
+<dl class="py method">
+<dt id="tqt.function.number.RoundToEven.backward">
+<em class="property">static </em><code class="sig-name descname">backward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ctx</span></em>, <em class="sig-param"><span class="n">grad_output</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/number.html#RoundToEven.backward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.number.RoundToEven.backward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines a formula for differentiating the operation.</p>
+<p>This function is to be overridden by all subclasses.</p>
+<p>It must accept a context <code class="xref py py-attr docutils literal notranslate"><span class="pre">ctx</span></code> as the first argument, followed by
+as many outputs did <a class="reference internal" href="#tqt.function.number.RoundToEven.forward" title="tqt.function.number.RoundToEven.forward"><code class="xref py py-func docutils literal notranslate"><span class="pre">forward()</span></code></a> return, and it should return as many
+tensors, as there were inputs to <a class="reference internal" href="#tqt.function.number.RoundToEven.forward" title="tqt.function.number.RoundToEven.forward"><code class="xref py py-func docutils literal notranslate"><span class="pre">forward()</span></code></a>. Each argument is the
+gradient w.r.t the given output, and each returned value should be the
+gradient w.r.t. the corresponding input.</p>
+<p>The context can be used to retrieve tensors saved during the forward
+pass. It also has an attribute <code class="xref py py-attr docutils literal notranslate"><span class="pre">ctx.needs_input_grad</span></code> as a tuple
+of booleans representing whether each input needs gradient. E.g.,
+<a class="reference internal" href="#tqt.function.number.RoundToEven.backward" title="tqt.function.number.RoundToEven.backward"><code class="xref py py-func docutils literal notranslate"><span class="pre">backward()</span></code></a> will have <code class="docutils literal notranslate"><span class="pre">ctx.needs_input_grad[0]</span> <span class="pre">=</span> <span class="pre">True</span></code> if the
+first input to <a class="reference internal" href="#tqt.function.number.RoundToEven.forward" title="tqt.function.number.RoundToEven.forward"><code class="xref py py-func docutils literal notranslate"><span class="pre">forward()</span></code></a> needs gradient computated w.r.t. the
+output.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.number.RoundToEven.forward">
+<em class="property">static </em><code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ctx</span></em>, <em class="sig-param"><span class="n">input</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/number.html#RoundToEven.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.number.RoundToEven.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs the operation.</p>
+<p>This function is to be overridden by all subclasses.</p>
+<p>It must accept a context ctx as the first argument, followed by any
+number of arguments (tensors or other types).</p>
+<p>The context can be used to store tensors that can be then retrieved
+during the backward pass.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="tqt.function.number.ceil">
+<code class="sig-prename descclassname">tqt.function.number.</code><code class="sig-name descname">ceil</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tqt.function.number.ceil" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt id="tqt.function.number.qSigned">
+<em class="property">class </em><code class="sig-prename descclassname">tqt.function.number.</code><code class="sig-name descname">qSigned</code><a class="reference internal" href="_modules/tqt/function/number.html#qSigned"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.number.qSigned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.autograd.function.Function</span></code></p>
+<dl class="py method">
+<dt id="tqt.function.number.qSigned.backward">
+<em class="property">static </em><code class="sig-name descname">backward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ctx</span></em>, <em class="sig-param"><span class="n">grad_output</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/number.html#qSigned.backward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.number.qSigned.backward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines a formula for differentiating the operation.</p>
+<p>This function is to be overridden by all subclasses.</p>
+<p>It must accept a context <code class="xref py py-attr docutils literal notranslate"><span class="pre">ctx</span></code> as the first argument, followed by
+as many outputs did <a class="reference internal" href="#tqt.function.number.qSigned.forward" title="tqt.function.number.qSigned.forward"><code class="xref py py-func docutils literal notranslate"><span class="pre">forward()</span></code></a> return, and it should return as many
+tensors, as there were inputs to <a class="reference internal" href="#tqt.function.number.qSigned.forward" title="tqt.function.number.qSigned.forward"><code class="xref py py-func docutils literal notranslate"><span class="pre">forward()</span></code></a>. Each argument is the
+gradient w.r.t the given output, and each returned value should be the
+gradient w.r.t. the corresponding input.</p>
+<p>The context can be used to retrieve tensors saved during the forward
+pass. It also has an attribute <code class="xref py py-attr docutils literal notranslate"><span class="pre">ctx.needs_input_grad</span></code> as a tuple
+of booleans representing whether each input needs gradient. E.g.,
+<a class="reference internal" href="#tqt.function.number.qSigned.backward" title="tqt.function.number.qSigned.backward"><code class="xref py py-func docutils literal notranslate"><span class="pre">backward()</span></code></a> will have <code class="docutils literal notranslate"><span class="pre">ctx.needs_input_grad[0]</span> <span class="pre">=</span> <span class="pre">True</span></code> if the
+first input to <a class="reference internal" href="#tqt.function.number.qSigned.forward" title="tqt.function.number.qSigned.forward"><code class="xref py py-func docutils literal notranslate"><span class="pre">forward()</span></code></a> needs gradient computated w.r.t. the
+output.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.number.qSigned.forward">
+<em class="property">static </em><code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ctx</span></em>, <em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">log2_t</span></em>, <em class="sig-param"><span class="n">bit_width</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/number.html#qSigned.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.number.qSigned.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>See TQT paper’s Eqn. (4)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="tqt.function.number.qUnsigned">
+<em class="property">class </em><code class="sig-prename descclassname">tqt.function.number.</code><code class="sig-name descname">qUnsigned</code><a class="reference internal" href="_modules/tqt/function/number.html#qUnsigned"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.number.qUnsigned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.autograd.function.Function</span></code></p>
+<dl class="py method">
+<dt id="tqt.function.number.qUnsigned.backward">
+<em class="property">static </em><code class="sig-name descname">backward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ctx</span></em>, <em class="sig-param"><span class="n">grad_output</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/number.html#qUnsigned.backward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.number.qUnsigned.backward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines a formula for differentiating the operation.</p>
+<p>This function is to be overridden by all subclasses.</p>
+<p>It must accept a context <code class="xref py py-attr docutils literal notranslate"><span class="pre">ctx</span></code> as the first argument, followed by
+as many outputs did <a class="reference internal" href="#tqt.function.number.qUnsigned.forward" title="tqt.function.number.qUnsigned.forward"><code class="xref py py-func docutils literal notranslate"><span class="pre">forward()</span></code></a> return, and it should return as many
+tensors, as there were inputs to <a class="reference internal" href="#tqt.function.number.qUnsigned.forward" title="tqt.function.number.qUnsigned.forward"><code class="xref py py-func docutils literal notranslate"><span class="pre">forward()</span></code></a>. Each argument is the
+gradient w.r.t the given output, and each returned value should be the
+gradient w.r.t. the corresponding input.</p>
+<p>The context can be used to retrieve tensors saved during the forward
+pass. It also has an attribute <code class="xref py py-attr docutils literal notranslate"><span class="pre">ctx.needs_input_grad</span></code> as a tuple
+of booleans representing whether each input needs gradient. E.g.,
+<a class="reference internal" href="#tqt.function.number.qUnsigned.backward" title="tqt.function.number.qUnsigned.backward"><code class="xref py py-func docutils literal notranslate"><span class="pre">backward()</span></code></a> will have <code class="docutils literal notranslate"><span class="pre">ctx.needs_input_grad[0]</span> <span class="pre">=</span> <span class="pre">True</span></code> if the
+first input to <a class="reference internal" href="#tqt.function.number.qUnsigned.forward" title="tqt.function.number.qUnsigned.forward"><code class="xref py py-func docutils literal notranslate"><span class="pre">forward()</span></code></a> needs gradient computated w.r.t. the
+output.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="tqt.function.number.qUnsigned.forward">
+<em class="property">static </em><code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ctx</span></em>, <em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">log2_t</span></em>, <em class="sig-param"><span class="n">bit_width</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/function/number.html#qUnsigned.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.function.number.qUnsigned.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>See TQT paper’s Eqn. (4)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="tqt.function.number.qsigned">
+<code class="sig-prename descclassname">tqt.function.number.</code><code class="sig-name descname">qsigned</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tqt.function.number.qsigned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="tqt.function.number.qunsigned">
+<code class="sig-prename descclassname">tqt.function.number.</code><code class="sig-name descname">qunsigned</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tqt.function.number.qunsigned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="tqt.function.number.round">
+<code class="sig-prename descclassname">tqt.function.number.</code><code class="sig-name descname">round</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tqt.function.number.round" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-tqt.function">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-tqt.function" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="tqt.function.qsigned">
+<code class="sig-prename descclassname">tqt.function.</code><code class="sig-name descname">qsigned</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tqt.function.qsigned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="tqt.function.qunsigned">
+<code class="sig-prename descclassname">tqt.function.</code><code class="sig-name descname">qunsigned</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tqt.function.qunsigned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">tqt-torch</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="tqt.html">tqt package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="tqt.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tqt.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tqt.html#module-tqt.utils">tqt.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tqt.html#module-tqt.wrapper">tqt.wrapper module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tqt.html#module-tqt">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">tqt.function package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tqt.function.activation">tqt.function.activation module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tqt.function.adder">tqt.function.adder module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tqt.function.batchnorm">tqt.function.batchnorm module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tqt.function.conv">tqt.function.conv module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tqt.function.linear">tqt.function.linear module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tqt.function.number">tqt.function.number module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tqt.function">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tqt.function.extra.html">tqt.function.extra package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tqt.threshold.html">tqt.threshold package</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="tqt.html">tqt package</a><ul>
+      <li>Previous: <a href="tqt.html" title="previous chapter">tqt package</a></li>
+      <li>Next: <a href="tqt.function.extra.html" title="next chapter">tqt.function.extra package</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Pannenets F.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/tqt.function.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,173 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tqt package &#8212; tqt-torch 0.1 beta documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="tqt.function package" href="tqt.function.html" />
+    <link rel="prev" title="Welcome to tqt-torch’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="tqt-package">
+<h1>tqt package<a class="headerlink" href="#tqt-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tqt.function.html">tqt.function package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tqt.function.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tqt.function.extra.html">tqt.function.extra package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tqt.function.extra.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tqt.function.extra.html#module-tqt.function.extra.adder">tqt.function.extra.adder module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tqt.function.extra.html#module-tqt.function.extra">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tqt.function.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tqt.function.html#module-tqt.function.activation">tqt.function.activation module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tqt.function.html#module-tqt.function.adder">tqt.function.adder module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tqt.function.html#module-tqt.function.batchnorm">tqt.function.batchnorm module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tqt.function.html#module-tqt.function.conv">tqt.function.conv module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tqt.function.html#module-tqt.function.linear">tqt.function.linear module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tqt.function.html#module-tqt.function.number">tqt.function.number module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tqt.function.html#module-tqt.function">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tqt.threshold.html">tqt.threshold package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tqt.threshold.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tqt.threshold.html#module-tqt.threshold.hook">tqt.threshold.hook module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tqt.threshold.html#module-tqt.threshold.init">tqt.threshold.init module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tqt.threshold.html#module-tqt.threshold.kl">tqt.threshold.kl module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tqt.threshold.html#module-tqt.threshold.max">tqt.threshold.max module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tqt.threshold.html#module-tqt.threshold.sd">tqt.threshold.sd module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tqt.threshold.html#module-tqt.threshold">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-tqt.utils">
+<span id="tqt-utils-module"></span><h2>tqt.utils module<a class="headerlink" href="#module-tqt.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="tqt.utils.make_net_quant_or_not">
+<code class="sig-prename descclassname">tqt.utils.</code><code class="sig-name descname">make_net_quant_or_not</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">net_proc</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">quant</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">exclude</span><span class="o">=</span><span class="default_value">[]</span></em>, <em class="sig-param"><span class="n">show</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/utils.html#make_net_quant_or_not"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.utils.make_net_quant_or_not" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-tqt.wrapper">
+<span id="tqt-wrapper-module"></span><h2>tqt.wrapper module<a class="headerlink" href="#module-tqt.wrapper" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-tqt">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-tqt" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">tqt-torch</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">tqt package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tqt.utils">tqt.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tqt.wrapper">tqt.wrapper module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tqt">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tqt.function.html">tqt.function package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tqt.function.extra.html">tqt.function.extra package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tqt.threshold.html">tqt.threshold package</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to tqt-torch’s documentation!</a></li>
+      <li>Next: <a href="tqt.function.html" title="next chapter">tqt.function package</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Pannenets F.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/tqt.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

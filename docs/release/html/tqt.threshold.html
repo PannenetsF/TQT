@@ -1,0 +1,255 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tqt.threshold package &#8212; tqt-torch 0.1 beta documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="tqt.function.extra package" href="tqt.function.extra.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="tqt-threshold-package">
+<h1>tqt.threshold package<a class="headerlink" href="#tqt-threshold-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-tqt.threshold.hook">
+<span id="tqt-threshold-hook-module"></span><h2>tqt.threshold.hook module<a class="headerlink" href="#module-tqt.threshold.hook" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="tqt.threshold.hook.add_hook">
+<code class="sig-prename descclassname">tqt.threshold.hook.</code><code class="sig-name descname">add_hook</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">layer</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">hook_handler</span></em>, <em class="sig-param"><span class="n">show</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/threshold/hook.html#add_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.threshold.hook.add_hook" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="tqt.threshold.hook.get_hook">
+<code class="sig-prename descclassname">tqt.threshold.hook.</code><code class="sig-name descname">get_hook</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">layer</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">show</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/threshold/hook.html#get_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.threshold.hook.get_hook" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="tqt.threshold.hook.hook_handler">
+<code class="sig-prename descclassname">tqt.threshold.hook.</code><code class="sig-name descname">hook_handler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">input</span></em>, <em class="sig-param"><span class="n">output</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/threshold/hook.html#hook_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.threshold.hook.hook_handler" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="tqt.threshold.hook.remove_hook">
+<code class="sig-prename descclassname">tqt.threshold.hook.</code><code class="sig-name descname">remove_hook</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">handles</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/threshold/hook.html#remove_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.threshold.hook.remove_hook" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="tqt.threshold.hook.remove_hookout">
+<code class="sig-prename descclassname">tqt.threshold.hook.</code><code class="sig-name descname">remove_hookout</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">layer</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">show</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/threshold/hook.html#remove_hookout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.threshold.hook.remove_hookout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-tqt.threshold.init">
+<span id="tqt-threshold-init-module"></span><h2>tqt.threshold.init module<a class="headerlink" href="#module-tqt.threshold.init" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="tqt.threshold.init.init_acti">
+<code class="sig-prename descclassname">tqt.threshold.init.</code><code class="sig-name descname">init_acti</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">net_module</span></em>, <em class="sig-param"><span class="n">qnet_module</span></em>, <em class="sig-param"><span class="n">bin_number</span><span class="o">=</span><span class="default_value">2048</span></em>, <em class="sig-param"><span class="n">cali_number</span><span class="o">=</span><span class="default_value">128</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/threshold/init.html#init_acti"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.threshold.init.init_acti" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="tqt.threshold.init.init_bias">
+<code class="sig-prename descclassname">tqt.threshold.init.</code><code class="sig-name descname">init_bias</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">net_module</span></em>, <em class="sig-param"><span class="n">qnet_module</span></em>, <em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">'max'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/threshold/init.html#init_bias"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.threshold.init.init_bias" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="tqt.threshold.init.init_network">
+<code class="sig-prename descclassname">tqt.threshold.init.</code><code class="sig-name descname">init_network</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">net_proc</span></em>, <em class="sig-param"><span class="n">qnet_proc</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">weight_method</span><span class="o">=</span><span class="default_value">'max'</span></em>, <em class="sig-param"><span class="n">bias_method</span><span class="o">=</span><span class="default_value">'max'</span></em>, <em class="sig-param"><span class="n">bin_number</span><span class="o">=</span><span class="default_value">2048</span></em>, <em class="sig-param"><span class="n">cali_number</span><span class="o">=</span><span class="default_value">128</span></em>, <em class="sig-param"><span class="n">show</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/threshold/init.html#init_network"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.threshold.init.init_network" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="tqt.threshold.init.init_weight">
+<code class="sig-prename descclassname">tqt.threshold.init.</code><code class="sig-name descname">init_weight</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">net_module</span></em>, <em class="sig-param"><span class="n">qnet_module</span></em>, <em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">'max'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/threshold/init.html#init_weight"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.threshold.init.init_weight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="tqt.threshold.init.qsigned">
+<code class="sig-prename descclassname">tqt.threshold.init.</code><code class="sig-name descname">qsigned</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tqt.threshold.init.qsigned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="tqt.threshold.init.qunsigned">
+<code class="sig-prename descclassname">tqt.threshold.init.</code><code class="sig-name descname">qunsigned</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tqt.threshold.init.qunsigned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-tqt.threshold.kl">
+<span id="tqt-threshold-kl-module"></span><h2>tqt.threshold.kl module<a class="headerlink" href="#module-tqt.threshold.kl" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="tqt.threshold.kl.entropy_calibration">
+<code class="sig-prename descclassname">tqt.threshold.kl.</code><code class="sig-name descname">entropy_calibration</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">qmodel</span></em>, <em class="sig-param"><span class="n">bin_number</span><span class="o">=</span><span class="default_value">2048</span></em>, <em class="sig-param"><span class="n">cali_number</span><span class="o">=</span><span class="default_value">128</span></em>, <em class="sig-param"><span class="n">eps</span><span class="o">=</span><span class="default_value">1e-08</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/threshold/kl.html#entropy_calibration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.threshold.kl.entropy_calibration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="tqt.threshold.kl.kl_divergence">
+<code class="sig-prename descclassname">tqt.threshold.kl.</code><code class="sig-name descname">kl_divergence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ha</span></em>, <em class="sig-param"><span class="n">hb</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/threshold/kl.html#kl_divergence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.threshold.kl.kl_divergence" title="Permalink to this definition">¶</a></dt>
+<dd><p>ans = J_{kl}(a,b)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="tqt.threshold.kl.quantize_bins_and_expand">
+<code class="sig-prename descclassname">tqt.threshold.kl.</code><code class="sig-name descname">quantize_bins_and_expand</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dist</span></em>, <em class="sig-param"><span class="n">quant_bins</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/threshold/kl.html#quantize_bins_and_expand"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.threshold.kl.quantize_bins_and_expand" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-tqt.threshold.max">
+<span id="tqt-threshold-max-module"></span><h2>tqt.threshold.max module<a class="headerlink" href="#module-tqt.threshold.max" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="tqt.threshold.max.threshold_activation_max">
+<code class="sig-prename descclassname">tqt.threshold.max.</code><code class="sig-name descname">threshold_activation_max</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">module</span></em>, <em class="sig-param"><span class="n">qmodule</span></em>, <em class="sig-param"><span class="n">eps</span><span class="o">=</span><span class="default_value">1e-08</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/threshold/max.html#threshold_activation_max"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.threshold.max.threshold_activation_max" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="tqt.threshold.max.threshold_bias_max">
+<code class="sig-prename descclassname">tqt.threshold.max.</code><code class="sig-name descname">threshold_bias_max</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">module</span></em>, <em class="sig-param"><span class="n">qmodule</span></em>, <em class="sig-param"><span class="n">eps</span><span class="o">=</span><span class="default_value">1e-08</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/threshold/max.html#threshold_bias_max"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.threshold.max.threshold_bias_max" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="tqt.threshold.max.threshold_weight_max">
+<code class="sig-prename descclassname">tqt.threshold.max.</code><code class="sig-name descname">threshold_weight_max</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">module</span></em>, <em class="sig-param"><span class="n">qmodule</span></em>, <em class="sig-param"><span class="n">eps</span><span class="o">=</span><span class="default_value">1e-08</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/threshold/max.html#threshold_weight_max"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.threshold.max.threshold_weight_max" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-tqt.threshold.sd">
+<span id="tqt-threshold-sd-module"></span><h2>tqt.threshold.sd module<a class="headerlink" href="#module-tqt.threshold.sd" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="tqt.threshold.sd.threshold_activation_3sd">
+<code class="sig-prename descclassname">tqt.threshold.sd.</code><code class="sig-name descname">threshold_activation_3sd</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">module</span></em>, <em class="sig-param"><span class="n">qmodule</span></em>, <em class="sig-param"><span class="n">eps</span><span class="o">=</span><span class="default_value">1e-08</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/threshold/sd.html#threshold_activation_3sd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.threshold.sd.threshold_activation_3sd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="tqt.threshold.sd.threshold_bias_3sd">
+<code class="sig-prename descclassname">tqt.threshold.sd.</code><code class="sig-name descname">threshold_bias_3sd</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">module</span></em>, <em class="sig-param"><span class="n">qmodule</span></em>, <em class="sig-param"><span class="n">eps</span><span class="o">=</span><span class="default_value">1e-08</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/threshold/sd.html#threshold_bias_3sd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.threshold.sd.threshold_bias_3sd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="tqt.threshold.sd.threshold_weight_3sd">
+<code class="sig-prename descclassname">tqt.threshold.sd.</code><code class="sig-name descname">threshold_weight_3sd</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">module</span></em>, <em class="sig-param"><span class="n">qmodule</span></em>, <em class="sig-param"><span class="n">eps</span><span class="o">=</span><span class="default_value">1e-08</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tqt/threshold/sd.html#threshold_weight_3sd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tqt.threshold.sd.threshold_weight_3sd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-tqt.threshold">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-tqt.threshold" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="tqt.threshold.qsigned">
+<code class="sig-prename descclassname">tqt.threshold.</code><code class="sig-name descname">qsigned</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tqt.threshold.qsigned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">tqt-torch</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="tqt.html">tqt package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="tqt.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tqt.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tqt.html#module-tqt.utils">tqt.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tqt.html#module-tqt.wrapper">tqt.wrapper module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tqt.html#module-tqt">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tqt.function.html">tqt.function package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tqt.function.extra.html">tqt.function.extra package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">tqt.threshold package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tqt.threshold.hook">tqt.threshold.hook module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tqt.threshold.init">tqt.threshold.init module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tqt.threshold.kl">tqt.threshold.kl module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tqt.threshold.max">tqt.threshold.max module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tqt.threshold.sd">tqt.threshold.sd module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tqt.threshold">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="tqt.html">tqt package</a><ul>
+      <li>Previous: <a href="tqt.function.extra.html" title="previous chapter">tqt.function.extra package</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Pannenets F.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/tqt.threshold.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

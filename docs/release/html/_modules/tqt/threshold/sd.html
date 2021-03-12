@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tqt.threshold.sd &#8212; tqt-torch 0.1 beta documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for tqt.threshold.sd</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+
+
+<div class="viewcode-block" id="threshold_weight_3sd"><a class="viewcode-back" href="../../../tqt.threshold.html#tqt.threshold.sd.threshold_weight_3sd">[docs]</a><span class="k">def</span> <span class="nf">threshold_weight_3sd</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">qmodule</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">):</span>
+    <span class="n">mean_value</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="n">module</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">data</span><span class="p">])</span>
+    <span class="n">std_value</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">.</span><span class="n">data</span>
+    <span class="n">qmodule</span><span class="o">.</span><span class="n">weight_log2_t</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">mean_value</span> <span class="o">+</span>
+                   <span class="mi">3</span> <span class="o">*</span> <span class="n">std_value</span><span class="p">))</span> <span class="k">if</span> <span class="n">qmodule</span><span class="o">.</span><span class="n">retrain</span> <span class="k">else</span> <span class="n">torch</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span>
+                       <span class="n">mean_value</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">std_value</span> <span class="o">+</span> <span class="n">eps</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="threshold_bias_3sd"><a class="viewcode-back" href="../../../tqt.threshold.html#tqt.threshold.sd.threshold_bias_3sd">[docs]</a><span class="k">def</span> <span class="nf">threshold_bias_3sd</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">qmodule</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">):</span>
+    <span class="n">mean_value</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="n">module</span><span class="o">.</span><span class="n">bias</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">data</span><span class="p">])</span>
+    <span class="n">std_value</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">bias</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">.</span><span class="n">data</span>
+    <span class="n">qmodule</span><span class="o">.</span><span class="n">bias_log2_t</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">mean_value</span> <span class="o">+</span>
+                   <span class="mi">3</span> <span class="o">*</span> <span class="n">std_value</span><span class="p">))</span> <span class="k">if</span> <span class="n">qmodule</span><span class="o">.</span><span class="n">retrain</span> <span class="k">else</span> <span class="n">torch</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span>
+                       <span class="n">mean_value</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">std_value</span> <span class="o">+</span> <span class="n">eps</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="threshold_activation_3sd"><a class="viewcode-back" href="../../../tqt.threshold.html#tqt.threshold.sd.threshold_activation_3sd">[docs]</a><span class="k">def</span> <span class="nf">threshold_activation_3sd</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">qmodule</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">):</span>
+    <span class="n">mean_value</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="n">module</span><span class="o">.</span><span class="n">hook_out</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">data</span><span class="p">])</span>
+    <span class="n">std_value</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">hook_out</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">.</span><span class="n">data</span>
+    <span class="n">qmodule</span><span class="o">.</span><span class="n">acti_log2_t</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">mean_value</span> <span class="o">+</span>
+                   <span class="mi">3</span> <span class="o">*</span> <span class="n">std_value</span><span class="p">))</span> <span class="k">if</span> <span class="n">qmodule</span><span class="o">.</span><span class="n">retrain</span> <span class="k">else</span> <span class="n">torch</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span>
+                       <span class="n">mean_value</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">std_value</span> <span class="o">+</span> <span class="n">eps</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">tqt-torch</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tqt.html">tqt package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tqt.function.html">tqt.function package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tqt.function.extra.html">tqt.function.extra package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tqt.threshold.html">tqt.threshold package</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Pannenets F.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
