@@ -168,4 +168,4 @@ The initial version of tqt-torch is developed by [Jinyu Bai](https://github.com/
 
 The beta version was tested by [Jinghan Xu](https://github.com/Xu-Jinghan), based on whose feedback a lot of bugs were fixed.
 
-The original papar could be find at [Arxiv](https://arxiv.org/abs/1903.08066).
+The original papar could be find at [Arxiv, Trained Quantization Thresholds for Accurate and Efficient Fixed-Point Inference of Deep Neural Networks](https://arxiv.org/abs/1903.08066).
