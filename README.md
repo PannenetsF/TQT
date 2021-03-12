@@ -2,6 +2,7 @@
 TQT's pytorch implementation.
 
 - [TQT](#tqt)
+  - [](#)
   - [TQT's modules](#tqts-modules)
     - [TQT.function](#tqtfunction)
     - [TQT.threshold](#tqtthreshold)
@@ -14,6 +15,10 @@ TQT's pytorch implementation.
   - [Do analyse over the activations and weights](#do-analyse-over-the-activations-and-weights)
 - [Contributing](#contributing)
 - [Acknowledgment](#acknowledgment)
+
+## 
+
+Now availabel at  [https://pypi.org/project/tqt/0.1.0/](https://pypi.org/project/tqt/0.1.0/)!
 
 ## TQT's modules
 
