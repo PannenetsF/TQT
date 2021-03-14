@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import os
-from setuptools import setup
+from setuptools import setup, find_packages
 
 # get key package details from tqt/__version__.py
 about = {}  # type: ignore
@@ -23,7 +23,7 @@ setup(name=about['__title__'],
       author=about['__author__'],
       author_email=about['__author_email__'],
       url=about['__url__'],
-      packages=['tqt'],
+      packages=find_packages(where='.', exclude=(), include=('*', )),
       include_package_data=True,
       python_requires=">=3.7.*",
       install_requires=['torch'],
