@@ -9,7 +9,8 @@ def add_dirty_hook_handler(model):
     def temp(model, tensor):
         model.dirty_hook_out = tensor
 
-    model.dirty_hook = lambda module, tensor: temp(model, tensor)
+    if hasattr(model, 'dirty_hook'):
+        model.dirty_hook = lambda module, tensor: temp(model, tensor)
 
 
 def remove_hook(handles):
@@ -54,6 +55,8 @@ def get_hook(layer, name, show=False):
         if show:
             print(name, 'hook has been fetched')
         hooks_got.append((name, layer.hook_out))
+        if hasattr(layer, 'dirty_hook_out'):
+            hooks_got.append((name + 'inter', layer.hook_out))
         return hooks_got
     else:
         for key in keys:
