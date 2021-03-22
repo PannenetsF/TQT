@@ -7,9 +7,10 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from .number import qsigned
+from .layer import SignedLayer
 
 
-class Conv2d(nn.Conv2d):
+class _Conv2d(nn.Conv2d):
     def __init__(self,
                  in_channels,
                  out_channels,
@@ -22,6 +23,7 @@ class Conv2d(nn.Conv2d):
                  padding_mode='zeros',
                  weight_bit_width=8,
                  bias_bit_width=16,
+                 inter_bit_width=16,
                  retrain=True,
                  quant=False):
         super().__init__(in_channels=in_channels,
@@ -35,14 +37,19 @@ class Conv2d(nn.Conv2d):
                          padding_mode=padding_mode)
         self.weight_bit_width = weight_bit_width
         self.bias_bit_width = bias_bit_width
+        self.inter_bit_width = inter_bit_width
+
         self.retrain = retrain
         self.quant = quant
+        self.dirty_hook = None
         if retrain is True:
             self.weight_log2_t = nn.Parameter(torch.Tensor(1))
+            self.inter_log2_t = nn.Parameter(torch.Tensor(1))
             if self.bias is not None:
                 self.bias_log2_t = nn.Parameter(torch.Tensor(1))
         else:
             self.weight_log2_t = torch.Tensor(1)
+            self.inter_log2_t = torch.Tensor(1)
             if self.bias is not None:
                 self.bias_log2_t = torch.Tensor(1)
 
@@ -60,14 +67,20 @@ class Conv2d(nn.Conv2d):
         self.quant = False
 
     def conv_forward(self, input):
-        if self.bias is None:
-            bias = None
-        else:
-            bias = qsigned(self.bias, self.bias_log2_t, self.bias_bit_width)
+        bias = None
         weight = qsigned(self.weight, self.weight_log2_t,
                          self.weight_bit_width)
-        return F.conv2d(input, weight, bias, self.stride, self.padding,
-                        self.dilation, self.groups)
+        inter = qsigned(
+            F.conv2d(input, weight, bias, self.stride, self.padding,
+                     self.dilation, self.groups), self.inter_log2_t,
+            self.inter_bit_width)
+        if self.dirty_hook is not None:
+            self.dirty_hook_out = inter
+        if self.bias is not None:
+            inter += qsigned(
+                self.bias, self.bias_log2_t,
+                self.bias_bit_width).unsqueeze(1).unsqueeze(1).unsqueeze(1)
+        return inter
 
     def conv_forward_unquant(self, input):
         return F.conv2d(input, self.weight, self.bias, self.stride,
@@ -76,6 +89,50 @@ class Conv2d(nn.Conv2d):
     def forward(self, input):
         return self.conv_forward(
             input) if self.quant else self.conv_forward_unquant(input)
+
+
+class Conv2d(nn.Module):
+    def __init__(self,
+                 in_channels,
+                 out_channels,
+                 kernel_size,
+                 stride=1,
+                 padding=0,
+                 dilation=1,
+                 groups=1,
+                 bias=True,
+                 padding_mode='zeros',
+                 weight_bit_width=8,
+                 bias_bit_width=16,
+                 inter_bit_width=16,
+                 output_bit_width=8,
+                 retrain=True,
+                 quant=False):
+        super().__init__()
+        self.inter_bit_width = inter_bit_width
+        self.output_bit_width = output_bit_width
+        self.conv = _Conv2d(in_channels,
+                            out_channels,
+                            kernel_size,
+                            stride=stride,
+                            padding=padding,
+                            dilation=dilation,
+                            groups=groups,
+                            bias=bias,
+                            padding_mode=padding_mode,
+                            weight_bit_width=weight_bit_width,
+                            bias_bit_width=bias_bit_width,
+                            inter_bit_width=inter_bit_width,
+                            retrain=retrain,
+                            quant=quant)
+        self.quantlayer = SignedLayer(output_bit_width=output_bit_width,
+                                      retrain=retrain,
+                                      quant=quant)
+
+    def forward(self, input):
+        input = self.conv(input)
+        input = self.quantlayer(input)
+        return input 
 
 
 if __name__ == '__main__':
