@@ -65,19 +65,22 @@ class _Adder2d(ex.Adder2d):
                                 stride=self.stride,
                                 padding=self.padding), self.inter_log2_t,
             self.inter_bit_width)
-        if self.dirty_hook is not None:
-            self.dirty_hook_out = inter
         if self.bias is not None:
             inter += qsigned(self.bias, self.bias_log2_t,
                              self.bias_bit_width).reshape(1, -1, 1, 1)
         return inter
 
     def adder_forward_unquant(self, input):
-        return ex.adder2d_function(input,
-                                   self.weight,
-                                   self.bias,
-                                   stride=self.stride,
-                                   padding=self.padding)
+        inter = ex.adder2d_function(input,
+                                    self.weight,
+                                    bias=None,
+                                    stride=self.stride,
+                                    padding=self.padding)
+        if self.dirty_hook is not None:
+            self.dirty_hook_out = inter
+        if self.bias is not None:
+            inter += self.bias.reshape(1, -1, 1, 1)
+        return inter
 
     def forward(self, input):
         return self.adder_forward(

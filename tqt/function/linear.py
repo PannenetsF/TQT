@@ -57,15 +57,19 @@ class _Linear(nn.Linear):
                          self.weight_bit_width)
         inter = qsigned(F.linear(input, weight, bias), self.inter_log2_t,
                         self.inter_bit_width)
-        if self.dirty_hook is not None:
-            self.dirty_hook_out = inter
         if self.bias is not None:
             inter += qsigned(self.bias, self.bias_log2_t,
                              self.bias_bit_width).reshape(1, -1)
         return inter
 
     def linear_forward_unquant(self, input):
-        return F.linear(input, self.weight, self.bias)
+        bias = None
+        inter = F.linear(input, self.weight, bias)
+        if self.dirty_hook is not None:
+            self.dirty_hook_out = inter
+        if self.bias is not None:
+            inter += self.bias.reshape(1, -1)
+        return inter
 
     def forward(self, input):
         return self.linear_forward(

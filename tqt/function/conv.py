@@ -74,16 +74,20 @@ class _Conv2d(nn.Conv2d):
             F.conv2d(input, weight, bias, self.stride, self.padding,
                      self.dilation, self.groups), self.inter_log2_t,
             self.inter_bit_width)
-        if self.dirty_hook is not None:
-            self.dirty_hook_out = inter
         if self.bias is not None:
             inter += qsigned(self.bias, self.bias_log2_t,
                              self.bias_bit_width).reshape(1, -1, 1, 1)
         return inter
 
     def conv_forward_unquant(self, input):
-        return F.conv2d(input, self.weight, self.bias, self.stride,
-                        self.padding, self.dilation, self.groups)
+        bias = None
+        inter = F.conv2d(input, self.weight, bias, self.stride, self.padding,
+                         self.dilation, self.groups)
+        if self.dirty_hook is not None:
+            self.dirty_hook_out = inter
+        if self.bias is not None:
+            inter += self.bias.reshape(1, -1, 1, 1)
+        return inter
 
     def forward(self, input):
         return self.conv_forward(
