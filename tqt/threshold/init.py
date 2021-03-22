@@ -29,11 +29,16 @@ def init_bias(net_module, qnet_module, method='max'):
         qnet_module.bias_bit_width)
 
 
-def init_acti(net_module, qnet_module, bin_number=2048, cali_number=128):
+def init_acti(net_module,
+              qnet_module,
+              bin_number=2048,
+              cali_number=128,
+              acti_type='acti_log2_t'):
     entropy_calibration(net_module,
                         qnet_module,
                         bin_number=bin_number,
-                        cali_number=cali_number)
+                        cali_number=cali_number,
+                        acti_type=acti_type)
 
 
 def init_network(net_proc,
@@ -55,6 +60,26 @@ def init_network(net_proc,
                 if show:
                     print(name, ': activation threshold is quanted as',
                           float(qnet_proc.acti_log2_t))
+        if hasattr(qnet_proc, 'inter_log2_t'):
+            if qnet_proc.quant is True:
+                init_acti(net_proc,
+                          qnet_proc,
+                          bin_number=2048,
+                          cali_number=128,
+                          acti_type='inter_log2_t')
+                if show:
+                    print(name, ': inter threshold is quanted as',
+                          float(qnet_proc.inter_log2_t))
+        if hasattr(qnet_proc, 'output_log2_t'):
+            if qnet_proc.quant is True:
+                init_acti(net_proc,
+                          qnet_proc,
+                          bin_number=2048,
+                          cali_number=128,
+                          acti_type='output_log2_t')
+                if show:
+                    print(name, ': output threshold is quanted as',
+                          float(qnet_proc.output_log2_t))
         if hasattr(qnet_proc, 'weight_log2_t'):
             if qnet_proc.quant is True:
                 init_weight(net_proc, qnet_proc, method=weight_method)

@@ -34,7 +34,8 @@ def entropy_calibration(model,
                         qmodel,
                         bin_number=2048,
                         cali_number=128,
-                        eps=1e-8):
+                        eps=1e-8,
+                        acti_type='acti_log2_t'):
     q = model.hook_out.flatten().data
     dist = torch.histc(q, bins=bin_number)
     bin_width = (q.max() - q.min()) / bin_number
@@ -51,5 +52,14 @@ def entropy_calibration(model,
     m, m_idx = torch.min(divergence[cali_number:], 0)
     threshold = q.min() + (m_idx + cali_number + 0.5) * bin_width + eps
     log2_t = torch.tensor([torch.log2(threshold)])
-    qmodel.acti_log2_t = torch.nn.Parameter(
-        log2_t) if qmodel.retrain else log2_t
+    if acti_type == 'acti_log2_t':
+        qmodel.acti_log2_t = torch.nn.Parameter(
+            log2_t) if qmodel.retrain else log2_t
+    elif acti_type == 'inter_log2_t':
+        qmodel.inter_log2_t = torch.nn.Parameter(
+            log2_t) if qmodel.retrain else log2_t
+    elif acti_type == 'output_log2_t':
+        qmodel.output_log2_t = torch.nn.Parameter(
+            log2_t) if qmodel.retrain else log2_t
+    else:
+        raise NotImplementedError
