@@ -30,7 +30,8 @@ class SignedLayer(nn.Module):
         self.quant = False
 
     def forward(self, input):
-        return qsigned(input, self.output_log2_t, self.output_bit_width)
+        return qsigned(input, self.output_log2_t,
+                       self.output_bit_width) if self.quant else input
 
 
 class UnsignedLayer(nn.Module):
@@ -56,4 +57,5 @@ class UnsignedLayer(nn.Module):
         self.quant = False
 
     def forward(self, input):
-        return qunsigned(input, self.output_log2_t, self.output_bit_width)
+        return qunsigned(input, self.output_log2_t,
+                         self.output_bit_width) if self.quant else input

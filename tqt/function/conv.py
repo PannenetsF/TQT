@@ -77,9 +77,8 @@ class _Conv2d(nn.Conv2d):
         if self.dirty_hook is not None:
             self.dirty_hook_out = inter
         if self.bias is not None:
-            inter += qsigned(
-                self.bias, self.bias_log2_t,
-                self.bias_bit_width).unsqueeze(1).unsqueeze(1).unsqueeze(1)
+            inter += qsigned(self.bias, self.bias_log2_t,
+                             self.bias_bit_width).reshape(1, -1, 1, 1)
         return inter
 
     def conv_forward_unquant(self, input):
@@ -132,7 +131,7 @@ class Conv2d(nn.Module):
     def forward(self, input):
         input = self.conv(input)
         input = self.quantlayer(input)
-        return input 
+        return input
 
 
 if __name__ == '__main__':
