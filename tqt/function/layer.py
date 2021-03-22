@@ -5,16 +5,21 @@ from .number import qsigned, qunsigned
 
 class SignedLayer(nn.Module):
     def __init__(self, output_bit_width=16, retrain=True, quant=False):
+        super().__init__()
         self.output_bit_width = output_bit_width
         self.retrain = retrain
         self.quant = quant
         if retrain is True:
+            self.inter_log2_t = nn.Parameter(torch.Tensor(1))
             self.output_log2_t = nn.Parameter(torch.Tensor(1))
         else:
+            self.inter_log2_t = torch.Tensor(1)
             self.output_log2_t = torch.Tensor(1)
 
     def static(self):
         self.retrain = False
+        if isinstance(self.inter_log2_t, nn.Parameter):
+            self.inter_log2_t.requires_grad_(False)
         if isinstance(self.output_log2_t, nn.Parameter):
             self.output_log2_t.requires_grad_(False)
 
@@ -30,6 +35,7 @@ class SignedLayer(nn.Module):
 
 class UnsignedLayer(nn.Module):
     def __init__(self, output_bit_width=16, retrain=True, quant=False):
+        super().__init__()
         self.output_bit_width = output_bit_width
         self.retrain = retrain
         self.quant = quant
