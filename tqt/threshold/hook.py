@@ -5,6 +5,13 @@ def hook_handler(model, input, output):
     model.hook_out = output
 
 
+def add_dirty_hook_handler(model):
+    def temp(model, tensor):
+        model.dirty_hook_out = tensor
+
+    model.dirty_hook = lambda module, tensor: temp(model, tensor)
+
+
 def remove_hook(handles):
     for handle in handles:
         handle.remove()
@@ -28,6 +35,7 @@ def add_hook(layer, name, hook_handler, show=False):
         if show:
             print(name, 'has added a hook')
         handles.append(layer.register_forward_hook(hook_handler))
+        add_dirty_hook_handler(layer)
         return handles
     else:
         for key in keys:
