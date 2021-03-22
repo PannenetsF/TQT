@@ -9,10 +9,9 @@ from torch.autograd import Function
 
 from . import extra as ex
 from .number import qsigned
-from .layer import SignedLayer
 
 
-class _Adder2d(ex.Adder2d):
+class Adder2d(ex.Adder2d):
     def __init__(self,
                  input_channel,
                  output_channel,
@@ -22,7 +21,8 @@ class _Adder2d(ex.Adder2d):
                  bias=False,
                  weight_bit_width=8,
                  bias_bit_width=16,
-                 inter_bit_width=8,
+                 inter_bit_width=16,
+                 output_bit_width=8,
                  retrain=True,
                  quant=False):
         super().__init__(input_channel,
@@ -34,17 +34,20 @@ class _Adder2d(ex.Adder2d):
         self.weight_bit_width = weight_bit_width
         self.bias_bit_width = bias_bit_width
         self.inter_bit_width = inter_bit_width
+        self.output_bit_width = output_bit_width
         self.retrain = retrain
         self.quant = quant
         self.dirty_hook = None
         if retrain is True:
             self.weight_log2_t = nn.Parameter(torch.Tensor(1))
             self.inter_log2_t = nn.Parameter(torch.Tensor(1))
+            self.output_log2_t = nn.Parameter(torch.Tensor(1))
             if self.bias is not None:
                 self.bias_log2_t = nn.Parameter(torch.Tensor(1))
         else:
             self.weight_log2_t = torch.Tensor(1)
             self.inter_log2_t = torch.Tensor(1)
+            self.output_log2_t = torch.Tensor(1)
             if self.bias is not None:
                 self.bias_log2_t = torch.Tensor(1)
         pass
@@ -83,45 +86,47 @@ class _Adder2d(ex.Adder2d):
         return inter
 
     def forward(self, input):
-        return self.adder_forward(
+        output = self.adder_forward(
             input) if self.quant else self.adder_forward_unquant(input)
+        if self.quant:
+            output = qsigned(output, self.output_log2_t, self.output_bit_width)
+        return output
 
 
-class Adder2d(nn.Module):
-    def __init__(self,
-                 input_channel,
-                 output_channel,
-                 kernel_size,
-                 stride=1,
-                 padding=0,
-                 bias=False,
-                 weight_bit_width=8,
-                 bias_bit_width=16,
-                 inter_bit_width=16,
-                 output_bit_width=8,
-                 retrain=True,
-                 quant=False):
-        super().__init__()
-        self.adder = _Adder2d(input_channel,
-                              output_channel,
-                              kernel_size,
-                              stride=stride,
-                              padding=padding,
-                              bias=bias,
-                              weight_bit_width=weight_bit_width,
-                              bias_bit_width=bias_bit_width,
-                              inter_bit_width=inter_bit_width,
-                              retrain=retrain,
-                              quant=quant)
-        self.quantlayer = SignedLayer(output_bit_width=output_bit_width,
-                                      retrain=retrain,
-                                      quant=quant)
+# class Adder2d(nn.Module):
+#     def __init__(self,
+#                  input_channel,
+#                  output_channel,
+#                  kernel_size,
+#                  stride=1,
+#                  padding=0,
+#                  bias=False,
+#                  weight_bit_width=8,
+#                  bias_bit_width=16,
+#                  inter_bit_width=16,
+#                  output_bit_width=8,
+#                  retrain=True,
+#                  quant=False):
+#         super().__init__()
+#         self.adder = _Adder2d(input_channel,
+#                               output_channel,
+#                               kernel_size,
+#                               stride=stride,
+#                               padding=padding,
+#                               bias=bias,
+#                               weight_bit_width=weight_bit_width,
+#                               bias_bit_width=bias_bit_width,
+#                               inter_bit_width=inter_bit_width,
+#                               retrain=retrain,
+#                               quant=quant)
+#         self.quantlayer = SignedLayer(output_bit_width=output_bit_width,
+#                                       retrain=retrain,
+#                                       quant=quant)
 
-    def forward(self, input):
-        input = self.adder(input)
-        input = self.quantlayer(input)
-        return input
-
+#     def forward(self, input):
+#         input = self.adder(input)
+#         input = self.quantlayer(input)
+#         return input
 
 if __name__ == '__main__':
     add = Adder2d(3, 4, 3, bias=True)

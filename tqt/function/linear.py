@@ -7,10 +7,9 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from .number import qsigned
-from .layer import SignedLayer
 
 
-class _Linear(nn.Linear):
+class Linear(nn.Linear):
     def __init__(self,
                  in_features,
                  out_features,
@@ -18,23 +17,27 @@ class _Linear(nn.Linear):
                  weight_bit_width=8,
                  bias_bit_width=16,
                  inter_bit_width=16,
+                 output_bit_width=8,
                  retrain=True,
                  quant=False):
         super().__init__(in_features, out_features, bias=bias)
         self.weight_bit_width = weight_bit_width
         self.bias_bit_width = bias_bit_width
         self.inter_bit_width = inter_bit_width
+        self.output_bit_width = output_bit_width
         self.dirty_hook = None
         self.retrain = retrain
         self.quant = quant
         if retrain is True:
             self.weight_log2_t = nn.Parameter(torch.Tensor(1))
             self.inter_log2_t = nn.Parameter(torch.Tensor(1))
+            self.output_log2_t = nn.Parameter(torch.Tensor(1))
             if self.bias is not None:
                 self.bias_log2_t = nn.Parameter(torch.Tensor(1))
         else:
             self.weight_log2_t = torch.Tensor(1)
             self.inter_log2_t = torch.Tensor(1)
+            self.output_log2_t = torch.Tensor(1)
             if self.bias is not None:
                 self.bias_log2_t = torch.Tensor(1)
 
@@ -72,39 +75,41 @@ class _Linear(nn.Linear):
         return inter
 
     def forward(self, input):
-        return self.linear_forward(
+        output = self.linear_forward(
             input) if self.quant else self.linear_forward_unquant(input)
+        if self.quant:
+            output = qsigned(output, self.output_log2_t, self.output_bit_width)
+        return output
 
 
-class Linear(nn.Module):
-    def __init__(self,
-                 in_features,
-                 out_features,
-                 bias=True,
-                 weight_bit_width=8,
-                 bias_bit_width=16,
-                 inter_bit_width=16,
-                 output_bit_width=8,
-                 retrain=True,
-                 quant=False):
-        super().__init__()
-        self.linear = _Linear(in_features,
-                              out_features,
-                              bias=bias,
-                              weight_bit_width=weight_bit_width,
-                              bias_bit_width=bias_bit_width,
-                              inter_bit_width=inter_bit_width,
-                              retrain=retrain,
-                              quant=quant)
-        self.quantlayer = SignedLayer(output_bit_width=output_bit_width,
-                                      retrain=retrain,
-                                      quant=quant)
+# class Linear(nn.Module):
+#     def __init__(self,
+#                  in_features,
+#                  out_features,
+#                  bias=True,
+#                  weight_bit_width=8,
+#                  bias_bit_width=16,
+#                  inter_bit_width=16,
+#                  output_bit_width=8,
+#                  retrain=True,
+#                  quant=False):
+#         super().__init__()
+#         self.linear = _Linear(in_features,
+#                               out_features,
+#                               bias=bias,
+#                               weight_bit_width=weight_bit_width,
+#                               bias_bit_width=bias_bit_width,
+#                               inter_bit_width=inter_bit_width,
+#                               retrain=retrain,
+#                               quant=quant)
+#         self.quantlayer = SignedLayer(output_bit_width=output_bit_width,
+#                                       retrain=retrain,
+#                                       quant=quant)
 
-    def forward(self, input):
-        input = self.linear(input)
-        input = self.quantlayer(input)
-        return input
-
+#     def forward(self, input):
+#         input = self.linear(input)
+#         input = self.quantlayer(input)
+#         return input
 
 if __name__ == '__main__':
     lin = Linear(3, 5)
