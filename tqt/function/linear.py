@@ -84,8 +84,6 @@ class Linear(nn.Module):
                  retrain=True,
                  quant=False):
         super().__init__()
-        self.inter_bit_width = inter_bit_width
-        self.output_bit_width = output_bit_width
         self.linear = _Linear(in_features,
                               out_features,
                               bias=bias,

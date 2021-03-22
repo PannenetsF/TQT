@@ -108,8 +108,6 @@ class Conv2d(nn.Module):
                  retrain=True,
                  quant=False):
         super().__init__()
-        self.inter_bit_width = inter_bit_width
-        self.output_bit_width = output_bit_width
         self.conv = _Conv2d(in_channels,
                             out_channels,
                             kernel_size,
