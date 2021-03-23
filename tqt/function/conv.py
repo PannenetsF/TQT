@@ -76,6 +76,8 @@ class Conv2d(nn.Conv2d):
             F.conv2d(input, weight, bias, self.stride, self.padding,
                      self.dilation, self.groups), self.inter_log2_t,
             self.inter_bit_width)
+        if self.dirty_hook is not None:
+            self.dirty_hook_out = inter
         if self.bias is not None:
             inter += qsigned(self.bias, self.bias_log2_t,
                              self.bias_bit_width).reshape(1, -1, 1, 1)
