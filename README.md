@@ -39,6 +39,21 @@ If the `retrain` is `True`, the Module will be in Retrain Mode, with the `log2_t
 Provide 3 ways to initialize the threshold: `init_max`, `init_kl_j`, `init_3sd`. 
 
 To initialize the weight and threshold correctly, please follow the method to build a network with TQT.
+`xxxxx.xxx`. 
+
+As we know, the input(k1-b-m1-p) multiplied by weights(k2-b-m2-p) will be like (k1+k2)-b-(m1+m2)-p. And then we need to accumlate all these inter-output. Assuming there are n inter-output, the bitwidth will need at least `ceil(log2(n))` more bits to make sure the data should not overflow. For a typical network, a 3x3x64 kernel will call for 10 more bits, then the inter-output is (k1+k2+10)-b-(m1+m2)-p. Considering the 2-pow, it will be better to use 32 bit. 
+
+So in the code, we will have:
+
+```py
+inter = qsigned(inter, self.weight_log2_t + input_log2_t, self.inter_bit_width) 
+```
+
+But in need of keep the network unchanged, we cannot treat `input_log2_t` as a argument. Then
+
+```py 
+input_log2_t = math.ceil(math.log2(math.ceil(input.max())))
+```
 
 ## Build a network with TQT
 
