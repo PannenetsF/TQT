@@ -20,12 +20,20 @@ def quantize_bins_and_expand(dist, quant_bins):
             dist_q[i] = dist[i * width:(i + 1) * width].sum()
             width_preserve = width - (dist[i * width:(i + 1) * width]
                                       == 0).sum()
-            dist_e[i * width:(i + 1) * width] = dist_q[i] / width_preserve * (
-                dist[i * width:(i + 1) * width] == 0)
+            if width_preserve == 0:
+                dist_e[i * width:(i + 1) * width] = 0
+            else:
+                dist_e[i * width:(i + 1) *
+                       width] = dist_q[i] / width_preserve * (
+                           dist[i * width:(i + 1) * width] == 0)
         else:
             dist_q[i] = dist[i * width:].sum()
             width_preserve = width - (dist[i * width:] == 0).sum()
-            dist_e[i * width:] = dist_q[i] / width_preserve * (dist[i * width:]
+            if width_preserve == 0:
+                dist_e[i * width:] = 0
+            else:
+                dist_e[i *
+                       width:] = dist_q[i] / width_preserve * (dist[i * width:]
                                                                == 0)
     return dist_e
 
