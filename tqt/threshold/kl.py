@@ -37,7 +37,7 @@ def entropy_calibration(model,
                         eps=1e-8,
                         acti_type='acti_log2_t'):
     if acti_type == 'inter_log2_t':
-        q = model.dirty_hook_out.flatten().data
+        q = model.dirty_hook_out.abs().flatten().data
     else:
         q = model.hook_out.flatten().data
     dist = torch.histc(q, bins=bin_number)
