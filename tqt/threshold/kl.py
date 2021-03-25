@@ -41,18 +41,26 @@ def entropy_calibration(model,
                         qmodel,
                         bin_number=2048,
                         cali_number=128,
-                        eps=1e-15):
+                        eps=1e-12):
     q = model.hook_out.flatten().data
     dist = torch.histc(q, bins=bin_number) + eps
     bin_width = (q.max() - q.min()) / bin_number
     divergence = torch.zeros([bin_number]) * 1.0
     for i in range(cali_number, bin_number):
-        ref_dist = dist[:i]
+        ref_dist = dist[:i].clone()
+        print(dist.max(), dist.min())
         outliers_count = dist[i:].sum()
+        print(dist.max(), dist.min())
         ref_dist[-1] += outliers_count
+        print(dist.max(), dist.min())
         ref_dist /= ref_dist.sum()
+        print(dist.max(), dist.min())
         can_dist = quantize_bins_and_expand(dist[:i], cali_number)
+        print(dist.max(), dist.min())
         can_dist /= can_dist.sum()
+        print(dist.max(), dist.min())
+        if (can_dist == 0).sum():
+            print('ss')
         divergence[i] = kl_divergence(ref_dist, can_dist)
 
     m, m_idx = torch.min(divergence[cali_number:], 0)
