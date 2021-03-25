@@ -23,18 +23,15 @@ def quantize_bins_and_expand(dist, quant_bins):
             if width_preserve == 0:
                 dist_e[i * width:(i + 1) * width] = 0
             else:
-                dist_e[i * width:(i + 1) *
-                       width] = dist_q[i] / width_preserve * (
-                           dist[i * width:(i + 1) * width] != 0)
+                dist_e[i * width:(i + 1) * width] = dist_q[i] / width_preserve
         else:
             dist_q[i] = dist[i * width:].sum()
             width_preserve = width - (dist[i * width:] == 0).sum()
             if width_preserve == 0:
                 dist_e[i * width:] = 0
             else:
-                dist_e[i * width:] = dist_q[i] / width_preserve * (
-                    dist[i * width:] != 0)
-    return dist_e
+                dist_e[i * width:] = dist_q[i] / width_preserve
+    return dist_e * (dist != 0)
 
 
 def entropy_calibration(model,
@@ -48,19 +45,11 @@ def entropy_calibration(model,
     divergence = torch.zeros([bin_number]) * 1.0
     for i in range(cali_number, bin_number):
         ref_dist = dist[:i].clone()
-        print(dist.max(), dist.min())
         outliers_count = dist[i:].sum()
-        print(dist.max(), dist.min())
         ref_dist[-1] += outliers_count
-        print(dist.max(), dist.min())
         ref_dist /= ref_dist.sum()
-        print(dist.max(), dist.min())
         can_dist = quantize_bins_and_expand(dist[:i], cali_number)
-        print(dist.max(), dist.min())
         can_dist /= can_dist.sum()
-        print(dist.max(), dist.min())
-        if (can_dist == 0).sum():
-            print('ss')
         divergence[i] = kl_divergence(ref_dist, can_dist)
 
     m, m_idx = torch.min(divergence[cali_number:], 0)
