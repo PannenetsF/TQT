@@ -5,6 +5,7 @@ Provide quantilized form of torch.nn.modules.conv
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import math
 
 from .number import qsigned
 
@@ -68,14 +69,14 @@ class Conv2d(nn.Conv2d):
         self.quant = False
 
     def conv_forward(self, input):
-
         weight = qsigned(self.weight, self.weight_log2_t,
                          self.weight_bit_width)
-        input_log2_t = input.abs().max().log2().ceil()
+        input_log2_t = input.abs().max().log2()
         inter = qsigned(
             F.conv2d(input, weight, None, self.stride, self.padding,
                      self.dilation, self.groups),
-            self.weight_log2_t + input_log2_t, self.inter_bit_width)
+            self.weight_log2_t + input_log2_t + math.log2(self.weight.numel()),
+            self.inter_bit_width)
         if self.bias is not None:
             inter += qsigned(
                 self.bias, self.bias_log2_t,

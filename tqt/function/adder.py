@@ -6,6 +6,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.autograd import Function
+import math
 
 from . import extra as ex
 from .number import qsigned
@@ -64,7 +65,7 @@ class Adder2d(ex.Adder2d):
         self.quant = False
 
     def adder_forward(self, input):
-        input_log2_t = input.abs().max().log2().ceil()
+        input_log2_t = input.abs().max().log2()
         weight = qsigned(self.weight, self.weight_log2_t,
                          self.weight_bit_width)
         inter = qsigned(
@@ -73,7 +74,8 @@ class Adder2d(ex.Adder2d):
                                 None,
                                 stride=self.stride,
                                 padding=self.padding),
-            self.weight_log2_t + input_log2_t, self.inter_bit_width)
+            self.weight_log2_t + input_log2_t + math.log2(self.weight.numel()),
+            self.inter_bit_width)
 
         if self.bias is not None:
             inter += qsigned(

@@ -5,6 +5,7 @@ Provide quantilized form of torch.nn.modules.linear
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import math
 
 from .number import qsigned
 
@@ -52,15 +53,16 @@ class Linear(nn.Linear):
         self.quant = False
 
     def linear_forward(self, input):
-        input_log2_t = input.abs().max().log2().ceil()
+        input_log2_t = input.abs().max().log2()
         weight = qsigned(self.weight, self.weight_log2_t,
                          self.weight_bit_width)
-        inter = qsigned(F.linear(input, weight, None),
-                        self.weight_log2_t + input_log2_t, self.acti_bit_width)
+        inter = qsigned(
+            F.linear(input, weight, None),
+            self.weight_log2_t + input_log2_t + math.log2(self.weight.numel()),
+            self.acti_bit_width)
         if self.bias is not None:
-            inter += qsigned(
-                self.bias, self.bias_log2_t,
-                self.bias_bit_width).unsqueeze(0) 
+            inter += qsigned(self.bias, self.bias_log2_t,
+                             self.bias_bit_width).unsqueeze(0)
         return qsigned(inter, self.acti_log2_t, self.acti_bit_width)
 
     def linear_forward_unquant(self, input):
