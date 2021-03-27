@@ -39,7 +39,7 @@ def entropy_calibration(model,
                         bin_number=2048,
                         cali_number=128,
                         eps=1e-12):
-    q = model.hook_out.flatten().data
+    q = model.hook_out.flatten().data.abs()
     dist = torch.histc(q, bins=bin_number) + eps
     bin_width = (q.max() - q.min()) / bin_number
     divergence = torch.zeros([bin_number]) * 1.0
