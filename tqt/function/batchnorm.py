@@ -45,9 +45,13 @@ class BatchNorm2d(nn.BatchNorm2d):
 
     def quantilize(self):
         self.quant = True
+        self.bias_log2_t.requires_grad = True
+        self.weight_log2_t.requires_grad = True
 
     def floatilize(self):
         self.quant = False
+        self.bias_log2_t.requires_grad = False
+        self.weight_log2_t.requires_grad = False
 
     def bn_forward(self, input):
         if self.affine is True:

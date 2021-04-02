@@ -32,9 +32,11 @@ class ReLU(nn.ReLU):
 
     def quantilize(self):
         self.quant = True
+        self.acti_log2_t.requires_grad = False
 
     def floatilize(self):
         self.quant = False
+        self.acti_log2_t.requires_grad = True
 
     def forward(self, input):
         return self.relu_forward(

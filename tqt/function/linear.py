@@ -44,9 +44,14 @@ class Linear(nn.Linear):
 
     def quantilize(self):
         self.quant = True
+        self.weight_log2_t.requires_grad = True 
+        self.bias_log2_t.requires_grad = True 
 
     def floatilize(self):
         self.quant = False
+        self.weight_log2_t.requires_grad = False 
+        self.bias_log2_t.requires_grad = False 
+
 
     def linear_forward(self, input):
         input_log2_t = input.abs().max().log2()
