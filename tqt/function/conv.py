@@ -24,7 +24,6 @@ class Conv2d(nn.Conv2d):
                  weight_bit_width=8,
                  bias_bit_width=16,
                  inter_bit_width=32,
-                 acti_bit_width=8,
                  retrain=True,
                  quant=False):
         super().__init__(in_channels=in_channels,
@@ -39,17 +38,14 @@ class Conv2d(nn.Conv2d):
         self.weight_bit_width = weight_bit_width
         self.bias_bit_width = bias_bit_width
         self.inter_bit_width = inter_bit_width
-        self.acti_bit_width = acti_bit_width
         self.retrain = retrain
         self.quant = quant
         if retrain is True:
             self.weight_log2_t = nn.Parameter(torch.Tensor(1))
-            self.acti_log2_t = nn.Parameter(torch.Tensor(1))
             if self.bias is not None:
                 self.bias_log2_t = nn.Parameter(torch.Tensor(1))
         else:
             self.weight_log2_t = torch.Tensor(1)
-            self.acti_log2_t = torch.Tensor(1)
             if self.bias is not None:
                 self.bias_log2_t = torch.Tensor(1)
 
@@ -59,8 +55,6 @@ class Conv2d(nn.Conv2d):
             self.bias_log2_t.requires_grad_(False)
         if isinstance(self.weight_log2_t, nn.Parameter):
             self.weight_log2_t.requires_grad_(False)
-        if isinstance(self.acti_log2_t, nn.Parameter):
-            self.acti_log2_t.requires_grad_(False)
 
     def quantilize(self):
         self.quant = True
@@ -81,7 +75,7 @@ class Conv2d(nn.Conv2d):
             inter += qsigned(
                 self.bias, self.bias_log2_t,
                 self.bias_bit_width).unsqueeze(1).unsqueeze(2).unsqueeze(0)
-        return qsigned(inter, self.acti_log2_t, self.acti_bit_width)
+        return inter
 
     def conv_forward_unquant(self, input):
         return F.conv2d(input, self.weight, self.bias, self.stride,

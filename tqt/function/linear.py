@@ -18,24 +18,20 @@ class Linear(nn.Linear):
                  weight_bit_width=8,
                  bias_bit_width=16,
                  inter_bit_width=32,
-                 acti_bit_width=8,
                  retrain=True,
                  quant=False):
         super().__init__(in_features, out_features, bias=bias)
         self.weight_bit_width = weight_bit_width
         self.bias_bit_width = bias_bit_width
         self.inter_bit_width = inter_bit_width
-        self.acti_bit_width = acti_bit_width
         self.retrain = retrain
         self.quant = quant
         if retrain is True:
             self.weight_log2_t = nn.Parameter(torch.Tensor(1))
-            self.acti_log2_t = nn.Parameter(torch.Tensor(1))
             if self.bias is not None:
                 self.bias_log2_t = nn.Parameter(torch.Tensor(1))
         else:
             self.weight_log2_t = torch.Tensor(1)
-            self.acti_log2_t = torch.Tensor(1)
             if self.bias is not None:
                 self.bias_log2_t = torch.Tensor(1)
 
@@ -59,11 +55,10 @@ class Linear(nn.Linear):
         inter = qsigned(
             F.linear(input, weight, None),
             self.weight_log2_t + input_log2_t + math.log2(self.weight.numel()),
-            self.acti_bit_width)
         if self.bias is not None:
             inter += qsigned(self.bias, self.bias_log2_t,
                              self.bias_bit_width).unsqueeze(0)
-        return qsigned(inter, self.acti_log2_t, self.acti_bit_width)
+        return inter
 
     def linear_forward_unquant(self, input):
         return F.linear(input, self.weight, self.bias)
