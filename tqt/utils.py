@@ -1,3 +1,5 @@
+import torch
+
 num_list = [str(i) for i in range(0, 10)]
 
 
@@ -39,3 +41,25 @@ def make_net_quant_or_not(net_proc, name, quant=True, exclude=[], show=False):
                                   quant=quant,
                                   exclude=exclude,
                                   show=show)
+
+
+def make_bn_fold_with_previous(net_proc, name, pre_proc, pre_name, show=False):
+    keys = list(net_proc._modules.keys())
+    _pre_proc = None
+    _pre_name = ''
+    if keys == []:
+        if isinstance(net_proc, torch.nn.BatchNorm2d):
+            if pre_proc is not None:
+                net_proc.fold(pre_proc)
+                if show:
+                    print(f'{name} is folded with {pre_name}')
+        return net_proc, name
+    else:
+        for key in keys:
+            _pre_proc, _pre_name = make_bn_fold_with_previous(
+                net_proc._modules[key],
+                name + f'.{key}',
+                _pre_proc,
+                _pre_name,
+                show=show)
+        return _pre_proc, _pre_name
