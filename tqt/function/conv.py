@@ -58,8 +58,9 @@ class Conv2d(nn.Conv2d):
 
     def quantilize(self):
         self.quant = True
-        self.bias_log2_t.requires_grad = False
         self.weight_log2_t.requires_grad = False
+        if self.bias is not None:
+            self.bias_log2_t.requires_grad = False
 
     def floatilize(self):
         self.quant = False

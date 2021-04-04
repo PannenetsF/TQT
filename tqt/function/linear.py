@@ -45,7 +45,8 @@ class Linear(nn.Linear):
     def quantilize(self):
         self.quant = True
         self.weight_log2_t.requires_grad = True
-        self.bias_log2_t.requires_grad = True
+        if self.bias is not None:
+            self.bias_log2_t.requires_grad = False
 
     def floatilize(self):
         self.quant = False
