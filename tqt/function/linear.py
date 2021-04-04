@@ -52,6 +52,17 @@ class Linear(nn.Linear):
         self.weight_log2_t.requires_grad = False 
         self.bias_log2_t.requires_grad = False 
 
+    def quant_answer(self):
+        self.weight.data = qsigned(
+            self.weight, self.weight_log2_t,
+            self.weight_bit_width)**(self.weight_bit_width - 1 -
+                                     torch.ceil(self.weight_log2_t)).int()
+        self.bias.data = qsigned(
+            self.bias, self.bias_log2_t,
+            self.bias_bit_width)**(self.bias_bit_width - 1 -
+                                   torch.ceil(self.bias_log2_t)).int()
+
+
 
     def linear_forward(self, input):
         input_log2_t = input.abs().max().log2()

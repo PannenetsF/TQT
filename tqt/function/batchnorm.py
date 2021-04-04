@@ -53,6 +53,16 @@ class BatchNorm2d(nn.BatchNorm2d):
         self.bias_log2_t.requires_grad = False
         self.weight_log2_t.requires_grad = False
 
+    def quant_answer(self):
+        self.weight.data = qsigned(
+            self.weight, self.weight_log2_t,
+            self.weight_bit_width)**(self.weight_bit_width - 1 -
+                                     torch.ceil(self.weight_log2_t)).int()
+        self.bias.data = qsigned(
+            self.bias, self.bias_log2_t,
+            self.bias_bit_width)**(self.bias_bit_width - 1 -
+                                   torch.ceil(self.bias_log2_t)).int()
+
     def bn_forward(self, input):
         if self.affine is True:
             weight = qsigned(self.weight, self.weight_log2_t,

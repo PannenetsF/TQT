@@ -66,6 +66,16 @@ class Conv2d(nn.Conv2d):
         self.bias_log2_t.requires_grad = True
         self.weight_log2_t.requires_grad = True
 
+    def quant_answer(self):
+        self.weight.data = qsigned(
+            self.weight, self.weight_log2_t,
+            self.weight_bit_width)**(self.weight_bit_width - 1 -
+                                     torch.ceil(self.weight_log2_t)).int()
+        self.bias.data = qsigned(
+            self.bias, self.bias_log2_t,
+            self.bias_bit_width)**(self.bias_bit_width - 1 -
+                                   torch.ceil(self.bias_log2_t)).int()
+
     def conv_forward(self, input):
         weight = qsigned(self.weight, self.weight_log2_t,
                          self.weight_bit_width)
