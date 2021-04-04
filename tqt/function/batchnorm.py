@@ -53,6 +53,10 @@ class BatchNorm2d(nn.BatchNorm2d):
         self.bias_log2_t.requires_grad = False
         self.weight_log2_t.requires_grad = False
 
+    def fold(self, weight_log2_t, bias_log2_t):
+        self.weight_log2_t.data = weight_log2_t.data
+        self.bias_log2_t.data = weight_log2_t.data
+
     def quant_answer(self):
         self.weight.data = qsigned(
             self.weight, self.weight_log2_t,
