@@ -44,13 +44,13 @@ class Linear(nn.Linear):
 
     def quantilize(self):
         self.quant = True
-        self.weight_log2_t.requires_grad = True 
-        self.bias_log2_t.requires_grad = True 
+        self.weight_log2_t.requires_grad = True
+        self.bias_log2_t.requires_grad = True
 
     def floatilize(self):
         self.quant = False
-        self.weight_log2_t.requires_grad = False 
-        self.bias_log2_t.requires_grad = False 
+        self.weight_log2_t.requires_grad = False
+        self.bias_log2_t.requires_grad = False
 
     def quant_answer(self):
         self.weight.data = qsigned(
@@ -62,8 +62,6 @@ class Linear(nn.Linear):
             self.bias_bit_width)**(self.bias_bit_width - 1 -
                                    torch.ceil(self.bias_log2_t)).int()
 
-
-
     def linear_forward(self, input):
         input_log2_t = input.abs().max().log2()
         weight = qsigned(self.weight, self.weight_log2_t,
@@ -71,6 +69,7 @@ class Linear(nn.Linear):
         inter = qsigned(
             F.linear(input, weight, None),
             self.weight_log2_t + input_log2_t + math.log2(self.weight.numel()),
+            self.inter_bit_width)
         if self.bias is not None:
             inter += qsigned(self.bias, self.bias_log2_t,
                              self.bias_bit_width).unsqueeze(0)
