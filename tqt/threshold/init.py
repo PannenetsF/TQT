@@ -1,6 +1,7 @@
 from .max import *
 from .sd import *
 from .kl import *
+from .ignore import *
 from ..function import qunsigned, qsigned
 
 
@@ -9,6 +10,8 @@ def init_weight(net_module, qnet_module, method='max'):
         threshold_weight_max(net_module, qnet_module)
     elif method == '3sd':
         threshold_weight_3sd(net_module, qnet_module)
+    elif method == 'ig':
+        threshold_weight_ig(net_module, qnet_module)
     else:
         raise NotImplementedError()
     qnet_module.weight.data = qsigned(
@@ -22,6 +25,8 @@ def init_bias(net_module, qnet_module, method='max'):
         threshold_bias_max(net_module, qnet_module)
     elif method == '3sd':
         threshold_bias_3sd(net_module, qnet_module)
+    elif method == 'ig':
+        threshold_bias_ig(net_module, qnet_module)
     else:
         raise NotImplementedError()
     qnet_module.bias.data = qsigned(
@@ -29,11 +34,18 @@ def init_bias(net_module, qnet_module, method='max'):
         qnet_module.bias_bit_width)
 
 
-def init_acti(net_module, qnet_module, bin_number=2048, cali_number=128):
-    entropy_calibration(net_module,
-                        qnet_module,
-                        bin_number=bin_number,
-                        cali_number=cali_number)
+def init_acti(net_module,
+              qnet_module,
+              method='entro',
+              bin_number=2048,
+              cali_number=128):
+    if method == 'entro':
+        entropy_calibration(net_module,
+                            qnet_module,
+                            bin_number=bin_number,
+                            cali_number=cali_number)
+    elif method == 'ig':
+        threshold_activation_ig(net_module, qnet_module)
 
 
 def init_network(net_proc,
@@ -41,6 +53,7 @@ def init_network(net_proc,
                  name,
                  weight_method='max',
                  bias_method='max',
+                 acti_method='entro',
                  bin_number=2048,
                  cali_number=128,
                  show=False):
@@ -74,6 +87,7 @@ def init_network(net_proc,
                          name + '.' + key,
                          weight_method=weight_method,
                          bias_method=bias_method,
+                         acti_method=acti_method,
                          bin_number=bin_number,
                          cali_number=cali_number,
                          show=show)
