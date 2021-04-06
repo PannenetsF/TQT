@@ -46,12 +46,13 @@ class Linear(nn.Linear):
         self.quant = True
         self.weight_log2_t.requires_grad = True
         if self.bias is not None:
-            self.bias_log2_t.requires_grad = False
+            self.bias_log2_t.requires_grad = True
 
     def floatilize(self):
         self.quant = False
         self.weight_log2_t.requires_grad = False
-        self.bias_log2_t.requires_grad = False
+        if self.bias is not None:
+            self.bias_log2_t.requires_grad = False
 
     def quant_answer(self):
         self.weight.data = qsigned(
