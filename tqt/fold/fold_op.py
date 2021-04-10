@@ -13,23 +13,25 @@ def fold_op(conv, bn, relu):
 
 
 def fold_the_network(net):
-    mdic = OrderedDict(net.named_children())
-    key = list(mdic.keys())
+    key = list(net._modules.keys())
     keylen = len(key)
     flag = 0
     while flag < keylen:
-        if list(OrderedDict(mdic[key[flag]].named_children()).keys()) != []:
-            fold_the_network(mdic[key[flag]])
+        if list(net._modules[key[flag]]._modules.keys()) != []:
+            fold_the_network(net._modules[key[flag]])
         else:
-            if isinstance(mdic[key[flag]], nn.Conv2d) and flag + 1 < keylen:
-                if isinstance(mdic[key[flag + 1]],
+            if isinstance(net._modules[key[flag]],
+                          nn.Conv2d) and flag + 1 < keylen:
+                if isinstance(net._modules[key[flag + 1]],
                               nn.BatchNorm2d) and flag + 2 < keylen:
-                    if isinstance(mdic[key[flag + 2]], nn.ReLU) or isinstance(
-                            mdic[key + 2], nn.ReLU6):
-                        mdic[key[flag]], mdic[key[flag + 1]], mdic[key[
-                            flag + 2]] = fold_op(mdic[key[flag]],
-                                                 mdic[key[flag + 1]],
-                                                 mdic[key[flag + 2]])
+                    if isinstance(net._modules[key[flag + 2]],
+                                  nn.ReLU) or isinstance(
+                                      net._modules[key + 2], nn.ReLU6):
+                        net._modules[key[flag]], net._modules[key[
+                            flag + 1]], net._modules[key[flag + 2]] = fold_op(
+                                net._modules[key[flag]],
+                                net._modules[key[flag + 1]],
+                                net._modules[key[flag + 2]])
                         print(flag)
                         flag += 2
         flag += 1
