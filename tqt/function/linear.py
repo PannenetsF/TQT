@@ -68,10 +68,7 @@ class Linear(nn.Linear):
         input_log2_t = input.abs().max().log2()
         weight = qsigned(self.weight, self.weight_log2_t,
                          self.weight_bit_width)
-        inter = qsigned(
-            F.linear(input, weight, None),
-            self.weight_log2_t + input_log2_t + math.log2(self.weight.numel()),
-            self.inter_bit_width)
+        inter = F.linear(input, weight, None)
         if self.bias is not None:
             inter += qsigned(self.bias, self.bias_log2_t,
                              self.bias_bit_width).unsqueeze(0)
