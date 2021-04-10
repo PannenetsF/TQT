@@ -63,6 +63,7 @@ def init_network(net_proc,
             if qnet_proc.quant is True:
                 init_acti(net_proc,
                           qnet_proc,
+                          method=acti_method,
                           bin_number=2048,
                           cali_number=128)
                 if show:

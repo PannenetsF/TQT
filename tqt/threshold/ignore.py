@@ -15,6 +15,6 @@ def threshold_bias_ig(module, qmodule, eps=1e-8):
 
 
 def threshold_activation_ig(module, qmodule, eps=1e-8):
-    ig_value = torch.tensor([qmodule.bias_bit_width - 1.]) + eps
+    ig_value = torch.tensor([qmodule.acti_bit_width - 1.]) + eps
     qmodule.acti_log2_t = torch.nn.Parameter(
         ig_value) if qmodule.retrain else ig_value
