@@ -65,14 +65,14 @@ class Conv2dBNReLU(_FoldModule):
             conv_weight = qsigned(conv_weight, self.weight_log2_t,
                                   self.weight_bit_width)
             conv_bias = qsigned(conv_bias, self.bias_log2_t,
-                                self.bias_bit_width).reshape(-1)
+                                self.bias_bit_width)
 
-        inter = nn.functional.conv2d(input, conv_weight, conv_bias,
+        inter = nn.functional.conv2d(input, conv_weight, conv_bias.reshape(-1),
                                      self.conv.stride, self.conv.padding,
                                      self.conv.dilation, self.conv.groups)
         inter = self.relu(inter)
 
         if self.quant:
-            output = qunsigned(inter, self.acti_log2_t, self.acti_bit_width)
+            inter = qunsigned(inter, self.acti_log2_t, self.acti_bit_width)
 
-        return output
+        return inter
