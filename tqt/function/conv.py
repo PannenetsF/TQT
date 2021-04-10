@@ -82,11 +82,8 @@ class Conv2d(nn.Conv2d):
         weight = qsigned(self.weight, self.weight_log2_t,
                          self.weight_bit_width)
         input_log2_t = input.abs().max().log2()
-        inter = qsigned(
-            F.conv2d(input, weight, None, self.stride, self.padding,
-                     self.dilation, self.groups),
-            self.weight_log2_t + input_log2_t + math.log2(self.weight.numel()),
-            self.inter_bit_width)
+        inter = F.conv2d(input, weight, None, self.stride, self.padding,
+                         self.dilation, self.groups)
         if self.bias is not None:
             inter += qsigned(
                 self.bias, self.bias_log2_t,
