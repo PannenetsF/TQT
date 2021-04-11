@@ -63,19 +63,11 @@ class Conv2dBNReLU(_FoldModule):
         self.bias_log2_t.requires_grad = False
 
     def forward(self, input):
-        if self.bn_freezing:
-            bn_var = self.bn.running_var.detach().clone().data.reshape(
-                -1, 1, 1, 1)
-            bn_mean = self.bn.running_mean.detach().clone().data.reshape(
-                -1, 1, 1, 1)
-            bn_weight = self.bn.weight.detach().clone().data.reshape(
-                -1, 1, 1, 1)
-            bn_bias = self.bn.bias.detach().clone().data.reshape(-1, 1, 1, 1)
-        else:
-            bn_var = self.bn.running_var.reshape(-1, 1, 1, 1)
-            bn_mean = self.bn.running_mean.reshape(-1, 1, 1, 1)
-            bn_weight = self.bn.weight.reshape(-1, 1, 1, 1)
-            bn_bias = self.bn.bias.reshape(-1, 1, 1, 1)
+        bn_var = self.bn.running_var.detach().clone().data.reshape(-1, 1, 1, 1)
+        bn_mean = self.bn.running_mean.detach().clone().data.reshape(
+            -1, 1, 1, 1)
+        bn_weight = self.bn.weight.detach().clone().data.reshape(-1, 1, 1, 1)
+        bn_bias = self.bn.bias.detach().clone().data.reshape(-1, 1, 1, 1)
         if self.conv.bias is not None:
             conv_bias = self.conv.bias.reshape(-1, 1, 1, 1)
         else:
