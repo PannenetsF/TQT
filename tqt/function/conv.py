@@ -23,6 +23,7 @@ class Conv2d(nn.Conv2d):
                  padding_mode='zeros',
                  weight_bit_width=8,
                  bias_bit_width=16,
+                 inter_bit_width=32,
                  retrain=True,
                  quant=False):
         super().__init__(in_channels=in_channels,
@@ -36,6 +37,7 @@ class Conv2d(nn.Conv2d):
                          padding_mode=padding_mode)
         self.weight_bit_width = weight_bit_width
         self.bias_bit_width = bias_bit_width
+        self.inter_bit_width = inter_bit_width
         self.retrain = retrain
         self.quant = quant
         if retrain is True:
@@ -79,13 +81,13 @@ class Conv2d(nn.Conv2d):
     def conv_forward(self, input):
         weight = qsigned(self.weight, self.weight_log2_t,
                          self.weight_bit_width)
-        input_log2_t = input.abs().max().log2()
-        inter = F.conv2d(input, weight, None, self.stride, self.padding,
-                         self.dilation, self.groups)
         if self.bias is not None:
-            inter += qsigned(
-                self.bias, self.bias_log2_t,
-                self.bias_bit_width).unsqueeze(1).unsqueeze(2).unsqueeze(0)
+            bias = qsigned(self.bias, self.bias_log2_t, self.bias_bit_width)
+        else:
+            bias = None
+        inter = F.conv2d(input, weight, bias, self.stride, self.padding,
+                         self.dilation, self.groups)
+
         return inter
 
     def conv_forward_unquant(self, input):

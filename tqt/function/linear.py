@@ -17,11 +17,13 @@ class Linear(nn.Linear):
                  bias=True,
                  weight_bit_width=8,
                  bias_bit_width=16,
+                 inter_bit_width=32,
                  retrain=True,
                  quant=False):
         super().__init__(in_features, out_features, bias=bias)
         self.weight_bit_width = weight_bit_width
         self.bias_bit_width = bias_bit_width
+        self.inter_bit_width = inter_bit_width
         self.retrain = retrain
         self.quant = quant
         if retrain is True:
@@ -63,13 +65,13 @@ class Linear(nn.Linear):
                                    torch.ceil(self.bias_log2_t)).int()
 
     def linear_forward(self, input):
-        input_log2_t = input.abs().max().log2()
         weight = qsigned(self.weight, self.weight_log2_t,
                          self.weight_bit_width)
-        inter = F.linear(input, weight, None)
         if self.bias is not None:
-            inter += qsigned(self.bias, self.bias_log2_t,
-                             self.bias_bit_width).unsqueeze(0)
+            bias = qsigned(self.bias, self.bias_log2_t, self.bias_bit_width)
+        else:
+            bias = None
+        inter = F.linear(input, weight, bias)
         return inter
 
     def linear_forward_unquant(self, input):
