@@ -12,11 +12,36 @@ class Conv2dBNReLU(_FoldModule):
                     relu, nn.ReLU), isinstance(relu, nn.ReLU6)):
             self.conv = conv
             self.bn = bn
-            self.relu = relu
+            self.relu = nn.ReLU() if isinstance(relu, nn.ReLU) else nn.ReLU6()
+            if self.bn_freezing:
+                bn_var = self.bn.running_var.detach().clone().data.reshape(
+                    -1, 1, 1, 1)
+                bn_mean = self.bn.running_mean.detach().clone().data.reshape(
+                    -1, 1, 1, 1)
+                bn_weight = self.bn.weight.detach().clone().data.reshape(
+                    -1, 1, 1, 1)
+                bn_bias = self.bn.bias.detach().clone().data.reshape(
+                    -1, 1, 1, 1)
+            else:
+                bn_var = self.bn.running_var.reshape(-1, 1, 1, 1)
+                bn_mean = self.bn.running_mean.reshape(-1, 1, 1, 1)
+                bn_weight = self.bn.weight.reshape(-1, 1, 1, 1)
+                bn_bias = self.bn.bias.reshape(-1, 1, 1, 1)
+            if self.conv.bias is not None:
+                conv_bias = self.conv.bias.reshape(-1, 1, 1, 1)
+            else:
+                conv_bias = 0.
+
+            conv_weight = self.conv.weight * bn_weight / (bn_var +
+                                                          self.bn.eps).sqrt()
+            conv_bias = bn_weight * (conv_bias - bn_mean) / (
+                bn_var + self.bn.eps).sqrt() + bn_bias
             self.weight_bit_width = self.conv.weight_bit_width
-            self.weight_log2_t = self.conv.weight_log2_t
+            self.weight_log2_t = torch.nn.Parameter(
+                conv_weight.abs().max().detach().data.log2())
             self.bias_bit_width = self.bn.bias_bit_width
-            self.bias_log2_t = self.bn.bias_log2_t
+            self.bias_log2_t = torch.nn.Parameter(
+                conv_bias.abs().max().detach().data.log2())
             self.acti_bit_width = self.relu.acti_bit_width
             self.acti_log2_t = self.relu.acti_log2_t
         else:
