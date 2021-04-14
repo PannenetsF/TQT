@@ -43,10 +43,10 @@ def get_hook(layer, name, show=False):
     hooks_got = []
     keys = list(layer._modules.keys())
     if keys == []:
-        if show:
-            print(name, 'hook has been fetched')
         if hasattr(layer, 'hook_out'):
             hooks_got.append((name, layer.hook_out))
+            if show:
+                print(name, 'hook has been fetched')
         return hooks_got
     else:
         for key in keys:
