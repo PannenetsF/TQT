@@ -26,8 +26,7 @@ ceil = Ceil.apply
 class RoundToEven(Function):
     @staticmethod
     def forward(ctx, input):
-        round = torch.floor(input)
-        return round + (round % 2)
+        return torch.round(input)
 
     @staticmethod
     def backward(ctx, grad_output):
