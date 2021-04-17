@@ -59,7 +59,7 @@ class qSigned(Function):
         cmp1 = rounded < n
         cmp2 = rounded > p
         grad_s = (rounded - x_div_s) * cmp0 + n * cmp1 + p * cmp2
-        grad_log_2_t = math.log(2) * grad_s
+        grad_log_2_t = math.log(2) * grad_s * s
         grad_x = cmp0 * 1.0
         return grad_output * grad_x, grad_output * grad_log_2_t, None
 
@@ -90,7 +90,7 @@ class qUnsigned(Function):
         cmp1 = rounded < n
         cmp2 = rounded > p
         grad_s = (rounded - x_div_s) * cmp0 + n * cmp1 + p * cmp2
-        grad_log_2_t = math.log(2) * grad_s
+        grad_log_2_t = math.log(2) * grad_s * s
         grad_x = cmp0 * 1.0
         return grad_output * grad_x, grad_output * grad_log_2_t, None
 
