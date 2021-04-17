@@ -26,7 +26,7 @@ def fold_the_network(net):
                               nn.BatchNorm2d) and flag + 2 < keylen:
                     if isinstance(net._modules[key[flag + 2]],
                                   nn.ReLU) or isinstance(
-                                      net._modules[key + 2], nn.ReLU6):
+                                      net._modules[key[flag + 2]], nn.ReLU6):
                         net._modules[key[flag]], net._modules[key[
                             flag + 1]], net._modules[key[flag + 2]] = fold_op(
                                 net._modules[key[flag]],
