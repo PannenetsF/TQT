@@ -13,20 +13,17 @@ class Conv2dBNReLU(_FoldModule):
             self.conv = conv
             self.bn = bn
             self.relu = nn.ReLU() if isinstance(relu, nn.ReLU) else nn.ReLU6()
-            bn_var = bn.running_var.detach().clone().data.reshape(
-                -1, 1, 1, 1)
+            bn_var = bn.running_var.detach().clone().data.reshape(-1, 1, 1, 1)
             bn_mean = bn.running_mean.detach().clone().data.reshape(
                 -1, 1, 1, 1)
-            bn_weight = bn.weight.detach().clone().data.reshape(
-                -1, 1, 1, 1)
+            bn_weight = bn.weight.detach().clone().data.reshape(-1, 1, 1, 1)
             bn_bias = bn.bias.detach().clone().data.reshape(-1, 1, 1, 1)
             if conv.bias is not None:
                 conv_bias = conv.bias.reshape(-1, 1, 1, 1)
             else:
                 conv_bias = 0.
 
-            conv_weight = conv.weight * bn_weight / (bn_var +
-                                                          bn.eps).sqrt()
+            conv_weight = conv.weight * bn_weight / (bn_var + bn.eps).sqrt()
             conv_bias = bn_weight * (conv_bias - bn_mean) / (
                 bn_var + bn.eps).sqrt() + bn_bias
             self.weight_bit_width = conv.weight_bit_width
@@ -79,15 +76,31 @@ class Conv2dBNReLU(_FoldModule):
         conv_bias = bn_weight * (conv_bias - bn_mean) / (
             bn_var + self.bn.eps).sqrt() + bn_bias
 
-        if self.quant:
+        if self.quant and self.bn_freezing:
             conv_weight = qsigned(conv_weight, self.weight_log2_t,
                                   self.weight_bit_width)
             conv_bias = qsigned(conv_bias, self.bias_log2_t,
                                 self.bias_bit_width)
-
-        inter = nn.functional.conv2d(input, conv_weight, conv_bias.reshape(-1),
+            inter = nn.functional.conv2d(input, conv_weight,
+                                         conv_bias.reshape(-1),
+                                         self.conv.stride, self.conv.padding,
+                                         self.conv.dilation, self.conv.groups)
+        elif self.quant and self.bn_freezing == False:
+            conv_weight = qsigned(self.conv.weight, self.weight_log2_t,
+                                  self.weight_bit_width)
+            conv_bias = qsigned(
+                self.conv.bias, self.bias_log2_t,
+                self.bias_bit_width) if self.conv.bias is not None else None
+            inter = self.bn(
+                nn.functional.conv2d(input, conv_weight, conv_bias,
                                      self.conv.stride, self.conv.padding,
-                                     self.conv.dilation, self.conv.groups)
+                                     self.conv.dilation, self.conv.groups))
+        else:
+            inter = nn.functional.conv2d(input, self.conv.weight,
+                                         self.conv.bias, self.conv.stride,
+                                         self.conv.padding, self.conv.dilation,
+                                         self.conv.groups)
+            inter = self.bn(inter)
         inter = self.relu(inter)
 
         if self.quant:
