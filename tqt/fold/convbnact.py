@@ -46,11 +46,13 @@ class Conv2dBNReLU(_FoldModule):
         self.quant = True
         self.weight_log2_t.requires_grad = True
         self.bias_log2_t.requires_grad = True
+        self.acti_log2_t.requires_grad = True
 
     def floatilize(self):
         self.quant = False
         self.weight_log2_t.requires_grad = False
         self.bias_log2_t.requires_grad = False
+        self.acti_log2_t.requires_grad = False
 
     def forward(self, input):
         if self.bn_freezing:
