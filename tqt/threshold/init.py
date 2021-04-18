@@ -46,6 +46,10 @@ def init_acti(net_module,
                             cali_number=cali_number)
     elif method == 'ig':
         threshold_activation_ig(net_module, qnet_module)
+    elif method == 'max':
+        threshold_activation_max(net_module, qnet_module)
+    else:
+        raise NotImplementedError()
 
 
 def init_network(net_proc,
