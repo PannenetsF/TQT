@@ -26,3 +26,7 @@ class ShareQuant(nn.Module):
 
     def share_forward_unquant(self, input):
         return input
+
+    def forward(self, input):
+        return self.share_forward(
+            input) if self.quant else self.share_forward_unquant(input)
