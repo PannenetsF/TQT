@@ -46,6 +46,11 @@ def fold_the_network(net):
                             flag + 1]] = fold_CB(net._modules[key[flag]],
                                                  net._modules[key[flag + 1]])
                         flag += 1
+                elif isinstance(net._modules[key[flag + 1]], nn.BatchNorm2d):
+                    net._modules[key[flag]], net._modules[key[
+                        flag + 1]] = fold_CB(net._modules[key[flag]],
+                                             net._modules[key[flag + 1]])
+                    flag += 1
         flag += 1
 
 
