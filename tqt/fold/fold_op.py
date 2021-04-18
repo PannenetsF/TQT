@@ -4,7 +4,7 @@ from collections import OrderedDict
 from .convbnact import Conv2dBNReLU
 
 
-def fold_op(conv, bn, relu):
+def fold_CBR(conv, bn, relu):
     folded = Conv2dBNReLU(conv, bn, relu)
     conv = folded
     bn = nn.Identity()
@@ -28,7 +28,7 @@ def fold_the_network(net):
                                   nn.ReLU) or isinstance(
                                       net._modules[key[flag + 2]], nn.ReLU6):
                         net._modules[key[flag]], net._modules[key[
-                            flag + 1]], net._modules[key[flag + 2]] = fold_op(
+                            flag + 1]], net._modules[key[flag + 2]] = fold_CBR(
                                 net._modules[key[flag]],
                                 net._modules[key[flag + 1]],
                                 net._modules[key[flag + 2]])
