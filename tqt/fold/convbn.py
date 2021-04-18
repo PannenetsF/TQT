@@ -4,12 +4,10 @@ from ..function import qsigned, qunsigned
 from .foldmodule import _FoldModule
 
 
-class Conv2dBNReLU(_FoldModule):
+class Conv2dBN(_FoldModule):
     def __init__(self, conv, bn):
         super().__init__()
-        if isinstance(conv, nn.Conv2d) and isinstance(
-                bn, nn.BatchNorm2d) and (isinstance(
-                    relu, nn.ReLU), isinstance(relu, nn.ReLU6)):
+        if isinstance(conv, nn.Conv2d) and isinstance(bn, nn.BatchNorm2d):
             self.conv = conv
             self.bn = bn
             bn_var = bn.running_var.detach().clone().data.reshape(-1, 1, 1, 1)

@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 from collections import OrderedDict
 from .convbnact import Conv2dBNReLU
+from .convbn import Conv2dBN
 
 
 def fold_CBR(conv, bn, relu):
@@ -10,6 +11,13 @@ def fold_CBR(conv, bn, relu):
     bn = nn.Identity()
     relu = nn.Identity()
     return conv, bn, relu
+
+
+def fold_CB(conv, bn):
+    folded = Conv2dBN(conv, bn)
+    conv = folded
+    bn = nn.Identity()
+    return conv, bn
 
 
 def fold_the_network(net):
@@ -32,8 +40,12 @@ def fold_the_network(net):
                                 net._modules[key[flag]],
                                 net._modules[key[flag + 1]],
                                 net._modules[key[flag + 2]])
-                        print(flag)
                         flag += 2
+                    else:
+                        net._modules[key[flag]], net._modules[key[
+                            flag + 1]] = fold_CB(net._modules[key[flag]],
+                                                 net._modules[key[flag + 1]])
+                        flag += 1
         flag += 1
 
 
