@@ -35,3 +35,11 @@ def fold_the_network(net):
                         print(flag)
                         flag += 2
         flag += 1
+
+
+def make_the_shortcut_share(net, show=False):
+    keys = list(net._modules.keys())
+    if hasattr(net, 'share_path'):
+        getattr(net, 'share_path')(show=show)
+    for k in keys:
+        make_the_shortcut_share(net._modules[k], show=show)
