@@ -59,3 +59,19 @@ def make_bn_fold_with_previous(net_proc, name, pre_proc, pre_name, show=False):
             _pre_name,
             show=show)
     return _pre_proc, _pre_name
+
+
+def make_bn_freeze(net_proc, name, pre_proc, pre_name, show=False):
+    keys = list(net_proc._modules.keys())
+    _pre_proc = None
+    _pre_name = ''
+    if hasattr(net_proc, 'bn_freeze'):
+        getattr(net_proc, 'bn_freeze')(True)
+    for key in keys:
+        _pre_proc, _pre_name = make_bn_fold_with_previous(
+            net_proc._modules[key],
+            name + f'.{key}',
+            _pre_proc,
+            _pre_name,
+            show=show)
+    return _pre_proc, _pre_name
