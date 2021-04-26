@@ -65,23 +65,20 @@ class Adder2d(ex.Adder2d):
         self.quant = False
 
     def adder_forward(self, input):
-        input_log2_t = input.abs().max().log2()
         weight = qsigned(self.weight, self.weight_log2_t,
                          self.weight_bit_width)
-        inter = qsigned(
-            ex.adder2d_function(input,
-                                weight,
-                                None,
-                                stride=self.stride,
-                                padding=self.padding),
-            self.weight_log2_t + input_log2_t + math.log2(self.weight.numel()),
-            self.inter_bit_width)
+        if self.bias is None:
+            bias = None
+        else:
+            bias = qsigned(self.bias, self.bias_log2_t, self.bias_bit_width)
 
-        if self.bias is not None:
-            inter += qsigned(
-                self.bias, self.bias_log2_t,
-                self.bias_bit_width).unsqueeze(1).unsqueeze(2).unsqueeze(0)
-        return qsigned(inter, self.acti_log2_t, self.acti_bit_width)
+        out = ex.adder2d_function(input,
+                                  weight,
+                                  bias,
+                                  stride=self.stride,
+                                  padding=self.padding)
+
+        return out
 
     def adder_forward_unquant(self, input):
         return ex.adder2d_function(input,
