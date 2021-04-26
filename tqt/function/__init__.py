@@ -15,5 +15,6 @@ from .linear import Linear
 
 from . import extra
 from .adder import Adder2d
+from .extra import SEConv2d
 
 from .number import qsigned, qunsigned
