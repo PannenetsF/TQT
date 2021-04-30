@@ -40,7 +40,7 @@ class SEConv2d(nn.Module):
                             kernel_size)))
 
     def forward(self, input):
-        weight = self.weight
+        weight = self.weight.detach()
         output = F.conv2d(input, weight, self.bias, self.stride, self.padding,
                           self.dilation, self.groups)
 
