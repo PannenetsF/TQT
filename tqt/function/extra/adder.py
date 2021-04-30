@@ -32,7 +32,7 @@ class Adder(Function):
 adder = Adder.apply
 
 
-def adder2d_function(X, W, bias, stride=1, padding=0):
+def adder2d_function(X, W, stride=1, padding=0):
     n_filters, d_filter, h_filter, w_filter = W.size()
     n_x, d_x, h_x, w_x = X.size()
 
@@ -54,9 +54,6 @@ def adder2d_function(X, W, bias, stride=1, padding=0):
     out = out.view(n_filters, h_out, w_out, n_x)
     out = out.permute(3, 0, 1, 2).contiguous()
 
-    if bias is not None:
-        out += bias.unsqueeze(0).unsqueeze(2).unsqueeze(3)
-
     return out
 
 
@@ -66,8 +63,7 @@ class Adder2d(nn.Module):
                  output_channel,
                  kernel_size,
                  stride=1,
-                 padding=0,
-                 bias=False):
+                 padding=0):
         super().__init__()
         self.stride = stride
         self.padding = padding
@@ -78,20 +74,13 @@ class Adder2d(nn.Module):
             nn.init.normal_(
                 torch.randn(output_channel, input_channel, kernel_size,
                             kernel_size)))
-        self._bias = bias
-        if bias:
-            self.bias = torch.nn.Parameter(
-                nn.init.uniform_(torch.zeros(output_channel)))
-        else:
-            self.bias = None
 
     def forward(self, x):
-        output = adder2d_function(x, self.weight, self.bias, self.stride,
-                                  self.padding)
+        output = adder2d_function(x, self.weight, self.stride, self.padding)
         return output
 
 
 if __name__ == '__main__':
-    add = Adder2d(3, 4, 3, bias=True)
+    add = Adder2d(3, 4, 3)
     x = torch.rand(10, 3, 10, 10)
     print(add(x).shape)

@@ -19,10 +19,6 @@ class SA2dBN(_FoldModule):
         self.quant = False
 
     def adder_weight(self, adder):
-        if adder.bias is None:
-            self.adder_bias_bit_width = adder.bias_bit_width
-            self.adder_bias_log2_t = adder.bias.abs().max().detach().data.log2(
-            )
         self.adder_weight_bit_width = adder.weight_bit_width
         self.adder_weight_log2_t = adder.weight.abs().max().detach().data.log2(
         )
@@ -46,15 +42,15 @@ class SA2dBN(_FoldModule):
 
     def quantilize(self):
         self.quant = True
-        self.weight_log2_t.requires_grad = True
-        self.bias_log2_t.requires_grad = True
-        self.acti_log2_t.requires_grad = True
+        self.bn_weight_log2_t.requires_grad = True
+        self.adder_weight_log2_t.requires_grad = True
+        self.bn_bias_log2_t.requires_grad = True
 
     def floatilize(self):
         self.quant = False
-        self.weight_log2_t.requires_grad = False
-        self.bias_log2_t.requires_grad = False
-        self.acti_log2_t.requires_grad = False
+        self.bn_weight_log2_t.requires_grad = False
+        self.adder_weight_log2_t.requires_grad = False
+        self.bn_bias_log2_t.requires_grad = False
 
     def forward(self, input):
         if self.bn_freezing:
@@ -76,9 +72,6 @@ class SA2dBN(_FoldModule):
         if self.quant and self.bn_freezing:
             adder_weight = qsigned(self.adder.weight, self.adder_weight_log2_t,
                                    self.adder_weight_bit_width)
-            adder_bias = qsigned(self.adder.bias, self.adder_bias_log2_t,
-                                 self.adder_bias_bit_width
-                                 ) if self.adder.bias is not None else None
             bn_weight = qsigned(bn_weight, self.bn_weight_log2_t,
                                 self.bn_weight_bit_width)
             bn_bias = qsigned(bn_bias, self.bn_bias_log2_t,
@@ -86,28 +79,23 @@ class SA2dBN(_FoldModule):
             inter = self.shift(input)
             inter = adder2d_function(inter,
                                      adder_weight,
-                                     adder_bias,
                                      stride=self.adder.stride,
                                      padding=self.adder.padding)
             inter = bn_weight * inter + bn_bias
         elif self.quant and self.bn_freezing == False:
             adder_weight = qsigned(self.adder.weight, self.adder_weight_log2_t,
                                    self.adder_weight_bit_width)
-            adder_bias = qsigned(self.adder.bias, self.adder_bias_log2_t,
-                                 self.adder_bias_bit_width
-                                 ) if self.adder.bias is not None else None
 
             inter = self.shift(input)
             inter = adder2d_function(inter,
                                      adder_weight,
-                                     adder_bias,
                                      stride=self.adder.stride,
                                      padding=self.adder.padding)
             inter = self.bn(inter)
         else:
-            inter = self.sa[0](input)
-            inter = adder2d_function(inter, self.sa[1].weight, self.sa[1].bias,
-                                     self.sa[1].stride, self.sa[1].padding)
+            inter = self.shift(input)
+            inter = adder2d_function(inter, self.adder.weight,
+                                     self.adder.stride, self.adder.padding)
             inter = self.bn(inter)
 
         return inter

@@ -19,9 +19,7 @@ class Adder2d(ex.Adder2d):
                  kernel_size,
                  stride=1,
                  padding=0,
-                 bias=False,
                  weight_bit_width=8,
-                 bias_bit_width=16,
                  inter_bit_width=32,
                  acti_bit_width=8,
                  retrain=True,
@@ -30,10 +28,8 @@ class Adder2d(ex.Adder2d):
                          output_channel,
                          kernel_size,
                          stride=stride,
-                         padding=padding,
-                         bias=bias)
+                         padding=padding)
         self.weight_bit_width = weight_bit_width
-        self.bias_bit_width = bias_bit_width
         self.inter_bit_width = inter_bit_width
         self.acti_bit_width = acti_bit_width
         self.retrain = retrain
@@ -41,18 +37,12 @@ class Adder2d(ex.Adder2d):
         if retrain is True:
             self.weight_log2_t = nn.Parameter(torch.Tensor(1))
             self.acti_log2_t = nn.Parameter(torch.Tensor(1))
-            if self.bias is not None:
-                self.bias_log2_t = nn.Parameter(torch.Tensor(1))
         else:
             self.weight_log2_t = torch.Tensor(1)
             self.acti_log2_t = torch.Tensor(1)
-            if self.bias is not None:
-                self.bias_log2_t = torch.Tensor(1)
 
     def static(self):
         self.retrain = False
-        if isinstance(self.bias_log2_t, nn.Parameter):
-            self.bias_log2_t.requires_grad_(False)
         if isinstance(self.weight_log2_t, nn.Parameter):
             self.weight_log2_t.requires_grad_(False)
         if isinstance(self.acti_log2_t, nn.Parameter):
@@ -67,14 +57,9 @@ class Adder2d(ex.Adder2d):
     def adder_forward(self, input):
         weight = qsigned(self.weight, self.weight_log2_t,
                          self.weight_bit_width)
-        if self.bias is None:
-            bias = None
-        else:
-            bias = qsigned(self.bias, self.bias_log2_t, self.bias_bit_width)
 
         out = ex.adder2d_function(input,
                                   weight,
-                                  bias,
                                   stride=self.stride,
                                   padding=self.padding)
 
@@ -83,7 +68,6 @@ class Adder2d(ex.Adder2d):
     def adder_forward_unquant(self, input):
         return ex.adder2d_function(input,
                                    self.weight,
-                                   self.bias,
                                    stride=self.stride,
                                    padding=self.padding)
 
