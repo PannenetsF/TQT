@@ -41,12 +41,12 @@ def config_network(
         conv_linear_list=[nn.Conv1d, nn.Conv2d, nn.Conv3d, nn.Linear],
         show=False):
     proc_list = list(net._modules.keys())
-    if show and config_acti(net, config, acti_list=acti_list):
+    if config_acti(net, config, acti_list=acti_list) and show:
         print(name, ' acti is configured')
-    if show and config_conv_linear(
-            net, config, conv_linear_list=conv_linear_list):
+    if config_conv_linear(net, config,
+                          conv_linear_list=conv_linear_list) and show:
         print(name, 'conv/linear is configured')
-    if show and config_bn(net, config, bn_list=bn_list):
+    if config_bn(net, config, bn_list=bn_list) and show:
         print(name, 'bn is configured')
     for n in proc_list:
         config_network(net._modules[n],
