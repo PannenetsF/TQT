@@ -2,11 +2,13 @@ from collections import namedtuple
 import torch.nn as nn
 from .utils import _isinstance
 
+
+# global config for tqt
 Config = namedtuple('config', [
     'conv_and_linear_weight', 'conv_and_linear_bias', 'bn_weight', 'bn_bias',
     'acti'
 ],
-                    defaults=[8, 8, 8, 8, 8])
+    defaults=[8, 8, 8, 8, 8])
 
 
 def config_bn(proc, config, bn_list):
