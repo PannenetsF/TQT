@@ -1,5 +1,5 @@
 # TQT
-TQT's pytorch implementation.
+TQT's pytorch implementation. **Note**, the Vitis Implement of TQT has different methods for the `numbers.py` to match with the DPU.
 
 ## Notice
 
